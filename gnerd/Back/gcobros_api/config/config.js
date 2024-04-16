@@ -1,4 +1,8 @@
-require("dotenv").config();
+const path = require("path");
+// Cargar el archivo .env del ambiente correspondiente
+require('dotenv').config({
+  path: path.resolve(process.cwd(), `.env.${process.env.NODE_ENV}`)
+});
 module.exports = {
   development: {
     username: process.env.DB_USER,
