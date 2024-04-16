@@ -1,0 +1,24 @@
+.mainBox {
+    background-color: white;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loadingBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.circularProgress{
+    margin-bottom: 1rem;
+    color: #4285F4;
+}
+
+.loadingText {
+    font-size: clamp(1rem, 1.5rem, 2.25rem);
+    color: #61686F;
+}

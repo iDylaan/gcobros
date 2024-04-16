@@ -1,0 +1,69 @@
+.titlePadding {
+  padding-bottom: 20px;
+}
+
+.tableRadius {
+  border-radius: 5px 5px 0px 0px;
+}
+
+.colorCellBlue {
+  background-color: #4285f4;
+}
+
+.cellBlueText {
+  color: #ffffff;
+}
+
+.colorCellF9 {
+  background-color: #f9f9f9;
+}
+
+.colorCellF6 {
+  background-color: #f6f6f6;
+}
+
+.colorCellF1 {
+  background-color: #f1f1f1;
+}
+
+.secondTable {
+  padding-top: 10;
+  padding-right: 10;
+}
+
+.googleButtonStyle {
+  padding: 0px 40px;
+  height: 60px;
+}
+
+.subscriptionsTable{
+  padding: 0px 40px;
+}
+
+.totalTable {
+  padding: 0 40px;
+  margin-bottom: 40px;
+}
+
+@media only screen and (max-width: 320px) {
+  .googleButtonStyle {
+    position: absolute; 
+    padding: 8px;
+    left: 0;
+    bottom: -100px;
+    width: 100%;
+  }
+
+  .totalTable {
+    padding: 0;
+  }
+
+  .subscriptionsTable{
+    padding: 0;
+  }
+
+  .mainContainer {
+    width: 100%;
+  }
+
+}

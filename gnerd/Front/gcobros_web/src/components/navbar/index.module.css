@@ -1,0 +1,29 @@
+.mainBox {
+    background-color: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    width: 100vw;
+    height: 110px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1;
+}
+
+.profileBox {
+    display: flex;
+    align-items: center;
+}
+
+.iconButton {
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+.profileAvatar {
+    height: 65px;
+    width: 65px;
+}
+
+.logo:hover {
+    cursor: pointer;
+}

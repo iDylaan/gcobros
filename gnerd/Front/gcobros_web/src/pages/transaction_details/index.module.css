@@ -1,0 +1,21 @@
+.tableTitles{
+    font-weight: bold;
+}
+
+.periodoDeCobro{
+    color: #4285F4;
+}
+
+.estatus{
+    font-weight: bold;
+    padding: 12px;
+    border-radius: 5px;
+    display: inline;
+    padding-top: 10px; padding-bottom: 10px;
+    padding-left: 30px; padding-right: 30px;
+}
+
+.paper{
+    width: 100%;
+    overflow: hidden;
+}

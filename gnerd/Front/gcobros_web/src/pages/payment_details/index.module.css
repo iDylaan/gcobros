@@ -1,0 +1,35 @@
+.titlePadding{
+    padding-bottom: 20px;
+}
+
+.tableRadius{
+    border-radius: 5px 5px 0px 0px;
+}
+
+.colorCellBlue{
+    background-color: #4285F4;
+}
+
+.cellBlueText{
+    color: #FFFFFF;
+}
+
+.colorCellF9{
+    background-color: #F9F9F9;
+}
+
+.colorCellF6{
+    background-color: #F6F6F6;
+}
+
+.colorCellF1{
+    background-color: #F1F1F1;;
+}
+
+.googleButtonStyle {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+}

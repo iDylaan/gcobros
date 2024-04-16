@@ -1,0 +1,61 @@
+.mainBox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.balanceCardBox {
+  margin-top: 15%;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  height: 380px;
+  width: 90%;
+  background-color: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttonBox {
+    display: flex;
+    justify-content: center;
+}
+
+.infoBox {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.buttonStyle{
+    background-color: #4285F4;
+    border-radius: 10px;
+    width: 270px;
+    height: 60px;
+}
+
+.lastPaymentBox {
+    display: flex;
+    justify-content: center;
+    padding-top: 2rem;
+}
+
+.textButton {
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.15rem;
+}
+
+@media only screen and (max-width: 320px){
+    .buttonStyle{
+        width: 80%;
+    }
+    .textButton {
+        font-size: 14px;
+        font-weight: 600;
+    }
+}

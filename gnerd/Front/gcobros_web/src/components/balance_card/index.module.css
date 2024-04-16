@@ -1,0 +1,44 @@
+.mainBox {
+    position: absolute;
+    top: 170px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 98%;
+}
+
+.balanceCardBox {
+    height: 255px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 50px;
+}
+
+.yourBalanceSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.showDetailsSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.lastPayment{
+    font-size: 18px;
+    color: #61686F;
+    margin-left: 1rem;
+}
+
+.showDetailsButton {
+    height: 55px;
+    width: 220px;
+    border-radius: 10px;
+    margin-left: 1rem;
+}

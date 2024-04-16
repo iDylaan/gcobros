@@ -1,0 +1,113 @@
+.mainBox {
+  width: 100vw;
+  height: 100vh;
+}
+
+.mainCardSectionBox {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.cardBox {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 700px;
+  height: 90%;
+  max-height: 400px;
+  background: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin-top: 100px;
+}
+
+.headerCardBox {
+  display: flex;
+  justify-content: center;
+  background-color: #189e59;
+  border-radius: 10px 10px 0 0;
+  height: 100px;
+}
+
+.iconBox {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  padding: 1rem;
+  border-radius: 100%;
+  top: -35px;
+  background: #189e59;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.doneIcon {
+  height: 60px;
+  width: 60px;
+  color: white;
+}
+
+.mainContentCardBox {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.successPaymentText {
+    font-size: 25px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.paymentProcessText {
+    font-size: 18px;
+    color: #61686F;
+    margin-bottom: 2rem;
+}
+
+.paymentAmountDescriptionText {
+    font-size: 15px;
+    color: #61686F;
+    margin-bottom: 5px;
+}
+
+.paymentAmount {
+    font-size: 25px;
+    margin-bottom: 2rem;
+}
+
+.buttonStyle {
+    height: 60px;
+    width: 200px;
+    background-color: #4285F4;
+    border-radius: 10px;
+}
+
+@media only screen and (max-width: 355px){
+
+    .headerCardBox {
+        height: 80px;
+    }
+
+    .iconBox {
+        height: 80px;
+        width: 80px;
+        top: -25px;
+    }
+
+    .doneIcon {
+        height: 40px;
+        width: 40px;
+    }
+
+}

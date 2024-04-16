@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "image": "/images/slider_dir/Calendar.png",
+        "title": "-- Image 1 --"
+
+    },
+    {
+        "id": 2,
+        "image": "/images/slider_dir/Docs.png",
+        "title": "-- Image 1 --"
+    },
+    {
+        "id": 3,
+        "image": "/images/slider_dir/Gmail.png",
+        "title": "-- Image 1 --"
+    },
+    {
+        "id": 4,
+        "image": "/images/slider_dir/Meet.png",
+        "title": "-- Image 1 --"
+    }
+]

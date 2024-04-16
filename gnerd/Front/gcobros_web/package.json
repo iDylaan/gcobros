@@ -1,0 +1,36 @@
+{
+  "name": "gcobros_web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "ngrok": "ngrok http 3000 --authtoken 2PFvKUCk5pbTAc4kkfwgwEcrAkG_7NTYu1K3yoYNQ74iyawXh"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@fontsource/pt-sans": "^4.5.11",
+    "@google-pay/button-react": "^3.0.6",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.11.16",
+    "@mui/x-data-grid": "^6.1.0",
+    "@stripe/react-stripe-js": "^2.1.0",
+    "@stripe/stripe-js": "^1.52.1",
+    "eslint": "8.37.0",
+    "eslint-config-next": "13.2.4",
+    "google-auth-library": "^8.7.0",
+    "googleapis": "^118.0.0",
+    "next": "13.2.4",
+    "next-auth": "^4.22.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-material-ui-carousel": "^3.4.2",
+    "sharp": "^0.32.0"
+  },
+  "devDependencies": {
+    "ngrok": "^4.3.3"
+  }
+}

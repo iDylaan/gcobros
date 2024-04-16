@@ -1,0 +1,54 @@
+.mainStack{
+    display: flex;
+    margin-top: 10%;
+    justify-content: center;
+}
+
+.mainBox { 
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    height: 250px;
+    width: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+}
+
+.title{
+    font-family: 'PT Sans';
+    font-weight: 400;
+    font-size: 32px;
+    font-style: normal;
+    color: black;
+    text-align: center;
+}
+
+.description{
+    font-family: 'PT Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 20px;
+    color: #61686F;
+    text-align: center;
+}
+
+.link{
+    display: flex;
+    letter-spacing: 0.1em;
+    justify-content: center;
+}
+
+.linkText{
+    font-family: 'PT Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 26px;
+    color: #4285F4;
+    margin-top: 20px;
+    
+}
