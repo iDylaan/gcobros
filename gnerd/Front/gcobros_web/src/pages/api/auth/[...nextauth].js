@@ -3,7 +3,6 @@ import GoogleProvider from "next-auth/providers/google";
 import { getAllDomains } from "../subscriptions/subscription_api";
 
 export const authOptions = {
-  //Configure one or more authentication providers
   site: process.env.NEXTAUTH_URL,
   providers: [
     GoogleProvider({
@@ -14,47 +13,40 @@ export const authOptions = {
           prompt: "consent",
           access_type: "online",
           response_type: "code",
-          redirect_uri: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URIS || 'https://gcobros-web.wn.r.appspot.com/api/auth/callback/google',
+          redirect_uri: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URIS
         },
       },
     }),
-    //... add more providers here
   ],
   pages: {
-    error: "/auth/error/error",
+    error: "/auth/error",
   },
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    signIn: async (user) => {
+    signIn: async ({ account, profile }) => {
+      if (account.provider !== "google") {
+        return false;
+      }
       try {
         const allAllowedDomains = await getAllDomains();
-        if (user.account.provider === "google") {
-          for (const domain of allAllowedDomains) {
-            if (user.profile.email.endsWith(domain.customerDomain)) {
-              return Promise.resolve(true);
-            }
-          }
-        } else {
-          return Promise.resolve(false);
-        }
-        return Promise.resolve(false);
+        return allAllowedDomains.some(domain => profile.email.endsWith(domain.customerDomain));
       } catch (error) {
-        return Promise.resolve(false);
+        console.error("Error fetching allowed domains:", error);
+        return false;
       }
     },
-    async jwt({ token, account }) {
-      // Persist the OAuth access_token to the token right after signin
+    jwt: async ({ token, account }) => {
       if (account) {
         token.accessToken = account.access_token;
       }
       return token;
     },
-    async session({ session, token, user }) {
-      // Send properties to the client, like an access_token from a provider.
+    session: async ({ session, token }) => {
       session.accessToken = token.accessToken;
       return session;
     },
   },
+  debug: process.env.NODE_ENV === 'development',
 };
 
 export default NextAuth(authOptions);

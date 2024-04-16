@@ -1,4 +1,8 @@
-require("dotenv").config();
+const path = require("path");
+// Cargar el archivo .env del ambiente correspondiente
+require('dotenv').config({
+  path: path.resolve(process.cwd(), `.env.${process.env.NODE_ENV}`)
+});
 
 const db = require("./models/index");
 const express = require("express");
@@ -17,7 +21,7 @@ app.set("trust proxy", true);
 
 const main = async () => {
   // Listen to the App Engine-specified port, or 3001 otherwise
-  const port = process.env.NODE_ENV == "production" ? parseInt(process.env.SERVER_PORT) : 3001;
+  const port = parseInt(process.env.SERVER_PORT) || 3001;
 
   try {
     //check if we can connect to db with no errors
