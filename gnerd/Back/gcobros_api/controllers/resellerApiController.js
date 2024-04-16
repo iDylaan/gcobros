@@ -1,24 +1,15 @@
-const fs = require("fs").promises;
-const path = require("path");
-const process = require("process");
-const { authenticate } = require("@google-cloud/local-auth");
+// const { authenticate } = require("@google-cloud/local-auth");
 const { google } = require("googleapis");
-const { log } = require("console");
-const { inspect } = require("util");
+// const { log } = require("console");
+// const { inspect } = require("util");
 
 const SCOPES = [
   "https://www.googleapis.com/auth/apps.order https://www.googleapis.com/auth/siteverification",
 ];
-const CREDENTIALS_PATH = path.resolve(process.cwd(), "credentials.json");
-
-/**
- * Load or request or authorization to call APIs.
- *
- */
 
 function getCredentials() {
   const auth = new google.auth.GoogleAuth({
-    keyFile: CREDENTIALS_PATH,
+    keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS_PATH,
     scopes: SCOPES,
     clientOptions: {
       subject: "iconos@gnerd.mx",

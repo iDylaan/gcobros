@@ -203,5 +203,8 @@ yarn-error.log*
 .vscode
 
 #credentials
+.credentials.json
 credentials.json
+/.credentials.json
+/credentials.json
 token.json
