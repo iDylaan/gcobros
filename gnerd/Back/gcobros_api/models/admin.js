@@ -20,15 +20,6 @@ module.exports = (sequelize, DataTypes) => {
             return await bcrypt.compare(password, this.password);
         }
 
-        // async function hashPassword(plaintextPassword) {
-        //     const hash = await bcrypt.hash(plaintextPassword, 10);
-        // }
-         
-        // async function comparePassword(plaintextPassword, hash) {
-        //     const result = await bcrypt.compare(plaintextPassword, hash);
-        //     return result;
-        // }
-
         static async createAdmin(adminData) {
             const transaction = await this.sequelize.transaction();
 

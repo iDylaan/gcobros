@@ -63,20 +63,20 @@ const signinAdmin = async (req, res) => {
         email = sanitizedEmail;
 
         if (!validator.isEmail(email)) {
-            return res.status(400).json({ message: 'Correo electrónico no válido' });
+            return res.status(400).json(handleErrorResponse({ message: 'Correo electrónico no válido' }));
         }
 
         // Obtener el usuario por su correo electrónico
         const admin = await Admin.findOne({ where: { email } });
 
         if (!admin) {
-            return res.status(404).json({ message: "Usuario no encontrado." });
+            return res.status(404).json(handleErrorResponse({ message: "Usuario no encontrado." }));
         }
 
         const isValid = await admin.validatePassword(password);
 
         if (!isValid) {
-            return res.status(401).json({ message: "Contraseña incorrecta." });
+            return res.status(401).json(handleErrorResponse({ message: "Contraseña incorrecta." }));
         }
 
         // AUTH OK
