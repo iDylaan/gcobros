@@ -1,7 +1,7 @@
 const db = require("../../models/index");
 const { Admin } = require("../../models/index");
 const validator = require('validator');
-const bcrypt = require('bcrypt');
+const { handleResponse, handleErrorResponse } = require("../utils/misc.js");
 
 // VALIDATORS
 
@@ -43,14 +43,14 @@ const createAdmin = async (req, res) => {
 
         console.log(admin);
 
-        return res.status(201).json({
+        return res.status(201).json(handleResponse({
             id: admin.id,
             adminName: admin.adminName,
             email: admin.email
-        });
+        }));
 
     } catch (error) {
-        return res.status(400).json({ error: error.message });
+        return res.status(400).json(handleErrorResponse({ error: error.message }));
     }
 };
 

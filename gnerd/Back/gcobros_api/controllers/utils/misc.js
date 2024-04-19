@@ -1,8 +1,13 @@
 
-export const handleResponse = (response) => {
-    return {'success': true, 'data': response };
+const handleResponse = (response) => {
+    return { 'success': true, 'data': response };
 }
 
-export const handleErrorResponse = (error) => {
-    return {'success': false, 'error': error };
+const handleErrorResponse = (error) => {
+    return { 'success': false, 'error': error };
+}
+
+module.exports = {
+    handleResponse,
+    handleErrorResponse
 }

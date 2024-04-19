@@ -3,6 +3,7 @@ const {
     Model
 } = require('sequelize');
 const bcrypt = require('bcrypt');
+const saltRounds = 10;
 module.exports = (sequelize, DataTypes) => {
     class Admin extends Model {
         /**
@@ -15,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         }
 
         // Verifica si la contraseña ingresada es correcta
-        async validatePassword(password) {
+        async validatePassword(password) { 
             return await bcrypt.compare(password, this.password);
         }
 
@@ -32,8 +33,7 @@ module.exports = (sequelize, DataTypes) => {
             const transaction = await this.sequelize.transaction();
 
             try {
-                const salt = await bcrypt.genSalt(10);
-                const hashedPassword = await bcrypt.hash(adminData.password, salt);
+                const hashedPassword = await bcrypt.hash(adminData.password, saltRounds);
 
                 const admin = await this.create({
                     ...adminData,
@@ -73,24 +73,6 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         sequelize,
         modelName: 'Admin',
-        hooks: {
-            // Hash de la contraseña antes de guardarla en la base de datos
-            beforeCreate: async (admin, options) => {
-                /*
-                 El numero de genSalt puede ser mas alto para mas seguridad 
-                 (aumenta los caracteres con la que hashea la contraseña), 
-                 pero hace mas consumo conputacional.
-                */
-                const salt = await bcrypt.genSalt(10);
-                admin.password = await bcrypt.hash(admin.password, salt);
-            },
-            beforeUpdate: async (admin, options) => {
-                if (admin.changed('password')) {
-                    const salt = await bcrypt.genSalt(10);
-                    admin.password = await bcrypt.hash(admin.password, salt);
-                }
-            }
-        }
     });
     return Admin;
 };
