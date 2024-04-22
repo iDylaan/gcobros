@@ -2,6 +2,7 @@ const db = require("../../models/index");
 const { Admin } = require("../../models/index");
 const validator = require('validator');
 const { handleResponse, handleErrorResponse } = require("../utils/misc.js");
+const jwt = require('jsonwebtoken');
 
 // VALIDATORS
 
@@ -41,8 +42,6 @@ const createAdmin = async (req, res) => {
             password
         });
 
-        console.log(admin);
-
         return res.status(201).json(handleResponse({
             id: admin.id,
             adminName: admin.adminName,
@@ -79,8 +78,15 @@ const signinAdmin = async (req, res) => {
             return res.status(401).json(handleErrorResponse({ message: "Credenciales incorrectas." }));
         }
 
+        const token = jwt.sign({
+            id: admin.id,
+            name: admin.adminName,
+            email: admin.email
+        }, process.env.JWT_SECRET, { expiresIn: '1d' })
+
+        console.log(token);
         // AUTH OK
-        res.json(handleResponse({ message: "Autenticación exitosa", admin: { id: admin.id, email: admin.email } }));
+        res.json(handleResponse({ message: "Autenticación exitosa", token }));
 
     } catch (error) {
         console.error(error);

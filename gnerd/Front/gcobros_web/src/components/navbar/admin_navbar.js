@@ -6,32 +6,29 @@ import {
 } from "@mui/material";
 import Palette from "../../constants/palette.js";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import ui from "./index.module.css";
 import ProfileAvatar from "../avatar/avatar.js";
 import MobileNavbar from "./mobile/mobile_navbar.js";
+import { getAdminData } from "../../helper/jwt.js";
 
 export default function AdminNavbar() {
     const isMobileScreen = useMediaQuery("(max-width: 1000px)");
     const router = useRouter();
-    const { data: session, status } = useSession({
-        required: true,
-        onUnauthenticated() {
-            router.push("/admin_signin");
-        }
-    });
+    let user;
+
 
     useEffect(() => {
-        if (status === "unauthenticated") {
-            router.push("/login");
+        user = getAdminData();
+        console.log(user);
+        if (!user) {
+            router.push("/admin_signin");
         }
-    }, [status, router]);
+    }, [user, router]);
 
-    if (status === "loading") {
-        return <div>Cargando...</div>;
+    function adminSignIn() {
+        router.push("/admin_signin");
     }
-
     function admin() {
         router.push("/admin");
     }
@@ -51,11 +48,11 @@ export default function AdminNavbar() {
                 />
             </Box>
             <Box className={ui.profileBox}>
-                {/* <ProfileAvatar userInfo={session}/> */}
+                {/* <ProfileAvatar userInfo={> */}
                 <Box marginRight="60px">
-                    <Typography fontSize="18px">{session?.user?.name}</Typography>
+                    <Typography fontSize="18px">{user?.name}</Typography>
                     <Typography fontSize="15px" color={Palette.grey}>
-                        {session?.user?.email}
+                        {user?.email}
                     </Typography>
                 </Box>
             </Box>

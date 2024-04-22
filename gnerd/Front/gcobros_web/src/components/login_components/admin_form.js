@@ -7,9 +7,9 @@ import {
     CircularProgress,
     Alert
 } from "@mui/material";
-import React, { useState, useEffect  } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { signIn, useSession } from "next-auth/react";
+import { adminSignIn } from "../../pages/api/admin/getAdmins";
 
 function AdminLoginForm() {
     const [email, setEmail] = useState('');
@@ -19,13 +19,6 @@ function AdminLoginForm() {
     const [errors, setErrors] = useState({ email: '', password: '' });
     const [loading, setLoading] = useState(false);
     const router = useRouter();
-    const { data: session, status } = useSession();
-
-    useEffect(() => {
-        if (status === 'authenticated') {
-            router.push('/admin');
-        }
-    }, [session, status, router]);
 
     const validateEmail = (email) => {
         const re = /\S+@\S+\.\S+/;
@@ -85,25 +78,8 @@ function AdminLoginForm() {
 
 
         try {
-            const response = await fetch('http://127.0.0.1:3001/api/admins/signin', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password })
-            });
-            
-            const result = await response.json();
-
-            if (!response.ok) {
-                throw new Error(result.error.message || 'Error inesperado en el servidor.');
-            }
-
-            await signIn('credentials', {
-                redirect: false,
-                callbackUrl: '/admin'
-            });
-
+            await adminSignIn(email, password);
+            router.push('/admin');
         } catch (error) {
             setError(error.message);
             setShowError(true);

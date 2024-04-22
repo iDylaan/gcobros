@@ -23,7 +23,7 @@
     "google-auth-library": "^8.7.0",
     "googleapis": "^118.0.0",
     "handlebars": "^4.7.7",
-    "jsonwebtoken": "^9.0.0",
+    "jsonwebtoken": "^9.0.2",
     "moment": "^2.29.4",
     "nodemailer": "^6.9.2",
     "nodemon": "^2.0.22",

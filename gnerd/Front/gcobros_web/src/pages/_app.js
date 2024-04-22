@@ -1,8 +1,9 @@
 import { SessionProvider } from "next-auth/react";
 import "../../index.css";
 import LoadingPage from "../components/loading";
-import {Elements} from '@stripe/react-stripe-js';
-import {loadStripe} from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import { AdminAuthProvider } from './context/AdminAuthContext';
 
 const stripePromise = loadStripe(`${process.env.STRIPE_API_KEY}`);
 
@@ -22,17 +23,19 @@ export default function App({
 }) {
   return (
     <SessionProvider>
-      {Component.auth ? (
-        <Auth>
+      <AdminAuthProvider>
+        {Component.auth ? (
+          <Auth>
+            <Elements stripe={stripePromise}>
+              <Component {...pageProps} />
+            </Elements>
+          </Auth>
+        ) : (
           <Elements stripe={stripePromise}>
             <Component {...pageProps} />
           </Elements>
-        </Auth>
-      ) : (
-        <Elements stripe={stripePromise}>
-          <Component {...pageProps} />
-        </Elements>
-      )}
+        )}
+      </AdminAuthProvider>
     </SessionProvider>
   );
 }
