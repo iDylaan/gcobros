@@ -17,17 +17,13 @@ export default function Navbar() {
   const router = useRouter();
   const { data: session, status } = useSession({
     required: true,
-    // onUnauthenticated(){
-    //   router.push("/");
-    // }
+    onUnauthenticated(){
+      router.push("/");
+    }
   });
 
   function dashboard() {
     router.push("/dashboard");
-  }
-
-  function admin() {
-    router.push("/admin");
   }
 
   return isMobileScreen ? (

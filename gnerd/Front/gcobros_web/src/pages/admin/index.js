@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { Box, Stack, Typography } from "@mui/material";
 import Palette from "../../constants/palette.js";
-import Navbar from "../../components/navbar/navbar.js";
+import AdminNavbar from "../../components/navbar/admin_navbar.js";
 import LoadingPage from "../../components/loading/index.js";
 import BalanceCard from "../../components/balance_card/balance_card.js";
 import { useEffect } from "react";
@@ -13,7 +13,7 @@ export default function adminDashboard() {
 
     return (
         <Stack>
-            <Navbar />
+            <AdminNavbar />
             <Box bgcolor={Palette.primary} height="180px">
                 <BalanceCard
                     domain="iconos@gnerd.mx"

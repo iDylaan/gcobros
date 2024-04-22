@@ -12,21 +12,21 @@ const createAdmin = async (req, res) => {
 
         // Validando el formato del correo electrónico
         if (!validator.isEmail(email)) {
-            throw new Error('El correo electrónico no es válido.');
+            return res.status(400).json(handleErrorResponse({ message: 'El correo electrónico no es válido.' }));
         }
 
         // Validando el formato de la contraseña (Best practices)
         if (!validator.isLength(password, { min: 8 })) {
-            throw new Error('La contraseña debe tener al menos 8 caracteres.');
+            return res.status(400).json(handleErrorResponse({ message: 'La contraseña debe tener al menos 8 caracteres.' }));
         }
         if (!/[A-Z]/.test(password)) {
-            throw new Error('La contraseña debe tener al menos una mayúscula.');
+            return res.status(400).json(handleErrorResponse({ message: 'La contraseña debe tener al menos una mayúscula.' }));
         }
         if (!/\d/.test(password)) {
-            throw new Error('La contraseña debe tener al menos un dígito.');
+            return res.status(400).json(handleErrorResponse({ message: 'La contraseña debe tener al menos un dígito.' }));
         }
         if (!/[!@#$%^&*()_,.?":{}|<>]/.test(password)) {
-            throw new Error('La contraseña debe tener al menos un caracter especial.');
+            return res.status(400).json(handleErrorResponse({ message: 'La contraseña debe tener al menos un caracter especial.' }));
         }
 
         // Sanitizando los datos de entrada
@@ -50,7 +50,7 @@ const createAdmin = async (req, res) => {
         }));
 
     } catch (error) {
-        return res.status(400).json(handleErrorResponse({ error: error.message }));
+        return res.status(500).json(handleErrorResponse({ error: error.message }));
     }
 };
 
@@ -70,13 +70,13 @@ const signinAdmin = async (req, res) => {
         const admin = await Admin.findOne({ where: { email } });
 
         if (!admin) {
-            return res.status(404).json(handleErrorResponse({ message: "Usuario no encontrado." }));
+            return res.status(401).json(handleErrorResponse({ message: "Credenciales incorrectas." }));
         }
 
         const isValid = await admin.validatePassword(password);
 
         if (!isValid) {
-            return res.status(401).json(handleErrorResponse({ message: "Contraseña incorrecta." }));
+            return res.status(401).json(handleErrorResponse({ message: "Credenciales incorrectas." }));
         }
 
         // AUTH OK

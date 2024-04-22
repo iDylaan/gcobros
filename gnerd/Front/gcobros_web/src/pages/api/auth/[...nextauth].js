@@ -1,5 +1,6 @@
 import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { getAllDomains } from "../subscriptions/subscription_api";
 
 export const authOptions = {
@@ -35,16 +36,18 @@ export const authOptions = {
         return false;
       }
     },
-    jwt: async ({ token, account }) => {
+    async jwt({ token, account, profile }) {
       if (account) {
-        token.accessToken = account.access_token;
+        token.accessToken = account.access_token
+        token.id = profile.id
       }
-      return token;
+      return token
     },
-    session: async ({ session, token }) => {
-      session.accessToken = token.accessToken;
-      return session;
-    },
+    async session({ session, token, user }) {
+      session.accessToken = token.accessToken
+      session.user.id = token.id
+      return session
+    }
   },
   debug: process.env.NODE_ENV === 'development',
 };
