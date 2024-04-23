@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const SECRET_KEY = process.env.SECRET_KEY;  // Asegúrate de que esta clave esté en tu archivo .env
+const SECRET_KEY = process.env.JWT_SECRET;
 
 const verifyJWT = (req, res, next) => {
     const authHeader = req.headers.authorization;

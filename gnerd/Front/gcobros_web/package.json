@@ -19,6 +19,7 @@
     "@mui/x-data-grid": "^6.1.0",
     "@stripe/react-stripe-js": "^2.1.0",
     "@stripe/stripe-js": "^1.52.1",
+    "@types/jwt-decode": "^3.1.0",
     "eslint": "8.37.0",
     "eslint-config-next": "13.2.4",
     "google-auth-library": "^8.7.0",

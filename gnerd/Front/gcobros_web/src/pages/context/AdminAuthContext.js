@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import jwtDecode from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 
 const AuthContext = createContext(null);
 
@@ -21,6 +21,7 @@ export const AdminAuthProvider = ({ children }) => {
     if (token) {
       try {
         const decoded = jwtDecode(token);
+        console.log(jwtDecode(token));
         const currentTime = Date.now() / 1000;
         if (decoded.exp < currentTime) {
           localStorage.removeItem('token');
