@@ -15,6 +15,8 @@
   "license": "ISC",
   "dependencies": {
     "@google-cloud/local-auth": "^2.1.0",
+    "@googleapis/docs": "^3.0.0",
+    "@googleapis/reseller": "^4.0.3",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",

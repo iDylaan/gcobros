@@ -9,6 +9,7 @@ const productApi = require("./productRoutes");
 const transactionApi = require("./transactionRoutes");
 const stripeApi = require("./stripeRoutes");
 const adminApi = require("./adminRoutes");
+const customerApi = require("./customerRoutes");
 
 //endPoints
 router.use('/api/test', TestApi);
@@ -17,5 +18,6 @@ router.use('/api/products', productApi);
 router.use('/api/transactions', transactionApi);
 router.use('/api/stripe', stripeApi);
 router.use('/api/admins', adminApi);
+router.use('/api/customers', customerApi);
 
 module.exports = router;
