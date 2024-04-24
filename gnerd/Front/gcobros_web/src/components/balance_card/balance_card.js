@@ -13,10 +13,6 @@ import TransactionCard from "../transaction_card/transaction_card";
 import ui from "./index.module.css";
 import MobileBalanceCard from "./mobile/balance_card_mobile";
 import { useRouter } from "next/router.js";
-import { useSession } from "next-auth/react";
-
-import { getTestApi, getDSData } from "../../pages/api/testing/testApi";
-
 import { useState, useEffect } from "react";
 import { epochToDate } from "../../helper/dateFormatter";
 import { readLastPaymentTransaction } from "../../pages/api/transactions/transactionApi";

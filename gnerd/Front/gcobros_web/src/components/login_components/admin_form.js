@@ -3,25 +3,48 @@ import ui from "./index.module.css";
 import {
     Container,
     TextField,
-    Button
+    Button,
+    CircularProgress,
+    Alert
 } from "@mui/material";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { adminSignIn } from "../../pages/api/admin/getAdmins";
 
-export default function AdminLoginForm() {
+function AdminLoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [showError, setShowError] = useState(false);
     const [errors, setErrors] = useState({ email: '', password: '' });
+    const [loading, setLoading] = useState(false);
+    const router = useRouter();
 
     const validateEmail = (email) => {
         const re = /\S+@\S+\.\S+/;
         return re.test(email);
     };
 
+    const validatePassword = (password) => {
+        if (password.length < 8) {
+            return false;
+        }
+        if (!/[A-Z]/.test(password)) {
+            return false;
+        }
+        if (!/\d/.test(password)) {
+            return false;
+        }
+        if (!/[!@#$%^&*()_,.?":{}|<>]/.test(password)) {
+            return false;
+        }
+        return true;
+    };
+
     const handleEmailChange = (event) => {
         const newEmail = event.target.value;
         setEmail(newEmail);
-        // En caso de que la contraseña no cumpla el tamaño mínimo
-        if (password.length < 8) {
+        if (!validateEmail(newEmail)) {
             setErrors(prevErrors => ({ ...prevErrors, email: 'Ingrese un correo electrónico válido.' }));
         } else {
             setErrors(prevErrors => ({ ...prevErrors, email: '' }));
@@ -32,28 +55,43 @@ export default function AdminLoginForm() {
         const newPassword = event.target.value;
         setPassword(newPassword);
         if (!validatePassword(newPassword)) {
-            setErrors(prevErrors => ({ ...prevErrors, password: 'La contraseña debe tener al menos 8 caracteres.' }));
+            setErrors(prevErrors => ({ ...prevErrors, password: 'La contraseña no es válida.' }));
         } else {
             setErrors(prevErrors => ({ ...prevErrors, password: '' }));
         }
     };
 
-    const handleSubmit = (event) => {
+    const handleSignin = async (event) => {
         event.preventDefault();
+        if (loading) { return }
         if (!validateEmail(email)) {
             setErrors(prevErrors => ({ ...prevErrors, email: 'Ingrese un correo electrónico válido.' }));
             return;
         }
         if (!validatePassword(password)) {
-            setErrors(prevErrors => ({ ...prevErrors, password: 'La contraseña debe tener al menos 8 caracteres.' }));
+            setErrors(prevErrors => ({ ...prevErrors, password: 'La contraseña no es válida.' }));
             return;
         }
 
-        // TODO: realizar envio a la API de autentificacion en el sistema
+        setShowError(false);
+        setLoading(true);
+
+
+        try {
+            await adminSignIn(email, password);
+            router.push('/admin');
+        } catch (error) {
+            setError(error.message);
+            setShowError(true);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
         <Container className={ui.formContainer}>
+            {showError && <Alert severity="error" style={{ marginBottom: '20px' }}>{error}</Alert>}
+
             <TextField
                 id="email"
                 label="Email"
@@ -84,8 +122,12 @@ export default function AdminLoginForm() {
                 size="large"
                 fullWidth
                 sx={{ marginTop: "20px" }}
-                onClick={handleSubmit}
-            >Ingresar</Button>
+                onClick={handleSignin}
+            >{loading ? <CircularProgress size={24} style={{ color: 'white' }} /> : 'Ingresar'}</Button>
         </Container>
     );
 }
+
+
+
+export default AdminLoginForm;

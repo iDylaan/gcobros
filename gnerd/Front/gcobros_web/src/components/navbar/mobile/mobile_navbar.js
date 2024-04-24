@@ -6,11 +6,11 @@ import {
   MenuItem,
   IconButton,
 } from "@mui/material";
-import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import ui from "./index.module.css";
 import { MenuRounded } from "@mui/icons-material";
+
 
 export default function MobileNavbar(userInfo) {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -25,7 +25,7 @@ export default function MobileNavbar(userInfo) {
   };
 
   function dashboard() {
-    router.push("/dashboard");
+    router.push("/admin");
   }
 
   return (
