@@ -1,14 +1,13 @@
 import {
     Container,
     Typography,
-    Link,
     Stack,
     Box,
     useMediaQuery,
-    TextField,
-    Button
 } from "@mui/material";
+import React, { useEffect } from "react";
 import Grid from "@mui/material/Grid"
+import { getAdminData } from "../../helper/jwt.js";
 import Image from "next/image";
 import slider from "../../helper/slider.json"
 import Carousel from 'react-material-ui-carousel'
@@ -39,7 +38,17 @@ const styles = {
 export default function ColumnsGrid() {
     const isMobileScreen = useMediaQuery("(max-width: 1000px)");
     const isMobileScreenH = useMediaQuery("(max-height: 600px)");
+
     const router = useRouter();
+
+    useEffect(() => {
+        const userData = getAdminData();
+        if (userData) { admin() }
+    }, []);
+
+    function admin() {
+        router.push("/admin");
+    }
 
     return (
         <>
