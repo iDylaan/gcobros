@@ -84,7 +84,6 @@ const signinAdmin = async (req, res) => {
             email: admin.email
         }, process.env.JWT_SECRET_KEY, { expiresIn: '1d' })
 
-        console.log(token);
         // AUTH OK
         res.json(handleResponse({ message: "Autenticación exitosa", token }));
 

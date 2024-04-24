@@ -15,7 +15,6 @@ import Carousel from 'react-material-ui-carousel'
 import LoadingPage from "../../components/loading";
 import * as Palette from "../../constants/palette";
 import { useRouter } from "next/router.js";
-import { useSession } from "next-auth/react";
 import MobileAdminLoginPage from "../../components/login_components/mobile_admin_page";
 import AdminLoginForm from "../../components/login_components/admin_form";
 

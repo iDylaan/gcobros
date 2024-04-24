@@ -20,7 +20,6 @@ export default function AdminNavbar() {
 
     useEffect(() => {
         const userData = getAdminData();
-        console.log(userData);
         if (!userData) { adminSignIn() } 
         else { setUser(userData) }
     }, []);
