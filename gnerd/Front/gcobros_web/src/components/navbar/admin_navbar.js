@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
     Box,
     Typography,
@@ -15,16 +15,15 @@ import { getAdminData } from "../../helper/jwt.js";
 export default function AdminNavbar() {
     const isMobileScreen = useMediaQuery("(max-width: 1000px)");
     const router = useRouter();
-    let user;
+    const [user, setUser] = useState(null);
 
 
     useEffect(() => {
-        user = getAdminData();
-        console.log(user);
-        if (!user) {
-            router.push("/admin_signin");
-        }
-    }, [user, router]);
+        const userData = getAdminData();
+        console.log(userData);
+        if (!userData) { adminSignIn() } 
+        else { setUser(userData) }
+    }, []);
 
     function adminSignIn() {
         router.push("/admin_signin");
@@ -48,7 +47,6 @@ export default function AdminNavbar() {
                 />
             </Box>
             <Box className={ui.profileBox}>
-                {/* <ProfileAvatar userInfo={> */}
                 <Box marginRight="60px">
                     <Typography fontSize="18px">{user?.name}</Typography>
                     <Typography fontSize="15px" color={Palette.grey}>

@@ -15,12 +15,7 @@ export default function adminDashboard() {
         <Stack>
             <AdminNavbar />
             <Box bgcolor={Palette.primary} height="180px">
-                <BalanceCard
-                    domain="iconos@gnerd.mx"
-                    subscriptions=""
-                    toPay="2000"
-                    customerId="1"
-                />
+                
             </Box>
             <Box bgcolor={Palette.boneWhite}></Box>
         </Stack>

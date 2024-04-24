@@ -82,7 +82,7 @@ const signinAdmin = async (req, res) => {
             id: admin.id,
             name: admin.adminName,
             email: admin.email
-        }, process.env.JWT_SECRET, { expiresIn: '1d' })
+        }, process.env.JWT_SECRET_KEY, { expiresIn: '1d' })
 
         console.log(token);
         // AUTH OK
