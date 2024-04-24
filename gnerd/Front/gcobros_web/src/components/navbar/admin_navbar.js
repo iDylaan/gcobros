@@ -3,14 +3,14 @@ import {
     Box,
     Typography,
     useMediaQuery,
+    Button
 } from "@mui/material";
 import Palette from "../../constants/palette.js";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import ui from "./index.module.css";
-import ProfileAvatar from "../avatar/avatar.js";
 import MobileNavbar from "./mobile/mobile_navbar.js";
-import { getAdminData } from "../../helper/jwt.js";
+import { getAdminData, jwtLogout } from "../../helper/jwt.js";
 
 export default function AdminNavbar() {
     const isMobileScreen = useMediaQuery("(max-width: 1000px)");
@@ -20,7 +20,7 @@ export default function AdminNavbar() {
 
     useEffect(() => {
         const userData = getAdminData();
-        if (!userData) { adminSignIn() } 
+        if (!userData) { adminSignIn() }
         else { setUser(userData) }
     }, []);
 
@@ -29,6 +29,10 @@ export default function AdminNavbar() {
     }
     function admin() {
         router.push("/admin");
+    }
+    function logout() {
+        jwtLogout();
+        router.push("/admin_signin");
     }
 
     return isMobileScreen ? (
@@ -51,6 +55,14 @@ export default function AdminNavbar() {
                     <Typography fontSize="15px" color={Palette.grey}>
                         {user?.email}
                     </Typography>
+                    <Button
+                        size="small"
+                        sx={{ width: 1, marginTop: '5px' }}
+                        variant="outlined"
+                        onClick={logout}
+                    >
+                        Cerrar Sesión
+                    </Button>
                 </Box>
             </Box>
         </Box>

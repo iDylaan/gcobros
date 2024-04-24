@@ -28,6 +28,10 @@ export function getAdminData() {
   }
 }
 
+export function jwtLogout() {
+  localStorage.removeItem('token');
+}
+
 export function verifyJWT(token) {
   try {
     const SECRET_KEY = process.env.JWT_SECRET_KEY;

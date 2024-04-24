@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import ui from "./index.module.css";
 import { MenuRounded } from "@mui/icons-material";
-
+import { jwtLogout } from "../../../helper/jwt.js";
 
 export default function MobileNavbar(userInfo) {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -23,6 +23,11 @@ export default function MobileNavbar(userInfo) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  function logout() {
+    jwtLogout();
+    router.push("/admin_signin");
+  }
 
   function dashboard() {
     router.push("/admin");
@@ -58,9 +63,7 @@ export default function MobileNavbar(userInfo) {
         }}
       >
         <MenuItem
-          onClick={() => {
-            signOut("google");
-          }}
+        onClick={logout}
         >
           <Typography fontSize="1rem">Cerrar sesión</Typography>
         </MenuItem>
