@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+const { handleResponse, handleErrorResponse } = require("../utils/misc.js");
+
 const SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 const verifyJWT = (req, res, next) => {

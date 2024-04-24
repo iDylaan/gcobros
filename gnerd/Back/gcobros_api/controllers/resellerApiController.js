@@ -1,10 +1,10 @@
 // const { authenticate } = require("@google-cloud/local-auth");
 const { google } = require("googleapis");
-// const { log } = require("console");
-// const { inspect } = require("util");
+const { handleResponse, handleErrorResponse } = require("./utils/misc.js");
 
 const SCOPES = [
-  "https://www.googleapis.com/auth/apps.order https://www.googleapis.com/auth/siteverification",
+  "https://www.googleapis.com/auth/apps.order",
+  "https://www.googleapis.com/auth/siteverification",
 ];
 
 function getCredentials() {
@@ -22,7 +22,7 @@ function getCredentials() {
 const getAllSubscriptionsFromGoogleWorkspace = async () => {
   const auth = getCredentials();
 
-  const reseller = google.reseller({ version: "v1", auth: auth });
+  const reseller = google.reseller({ version: "v1", auth });
 
   let res = await reseller.subscriptions.list();
   let allSubscriptions = [];
@@ -50,6 +50,45 @@ const getAllSubscriptionsFromGoogleWorkspace = async () => {
   return allSubscriptions;
 };
 
+const getCustomersFromGoogleWorkspace = async (req, res) => {
+  const auth = getCredentials();
+
+  const reseller = google.reseller({ version: "v1", auth });
+
+  try {
+    let subscriptionsPage = await reseller.subscriptions.list();
+    const subscriptionsArr = subscriptionsPage.data.subscriptions
+
+    const allCustomersIDs = subscriptionsArr.map((subscription) => subscription.customerId);
+
+    let allCustomers = await getCustomers(allCustomersIDs);
+
+    return res.status(200).json(handleResponse(allCustomers));
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json(handleErrorResponse({ message: error }));
+  }
+
+}
+
+async function getCustomers(customerIds) {
+  const auth = getCredentials();
+  const reseller = google.reseller({ version: "v1", auth });
+  const customers = []
+  try {
+    for (const customerId of customerIds) {
+      const customer = await reseller.customers.get({ customerId });
+      customers.push(customer.data);
+    }
+  } catch (error) {
+    console.log('Error en la consulta del customer ', customerId);
+    console.log(error);
+  }
+  
+  return customers;
+}
+
 module.exports = {
   getAllSubscriptionsFromGoogleWorkspace,
+  getCustomersFromGoogleWorkspace
 };

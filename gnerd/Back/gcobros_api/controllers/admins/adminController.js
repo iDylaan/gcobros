@@ -1,4 +1,3 @@
-const db = require("../../models/index");
 const { Admin } = require("../../models/index");
 const validator = require('validator');
 const { handleResponse, handleErrorResponse } = require("../utils/misc.js");
