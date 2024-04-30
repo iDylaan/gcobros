@@ -9,6 +9,7 @@ const express = require("express");
 const cors = require("cors");
 const { updateSubscriptions } = require("./controllers/automatic/subscriptions");
 const app = express();
+const { initCronJobs } = require('./controllers/schedulers/jobs.js');
 
 const corsOptions = {
   origin: process.env.NODE_ENV == "production" ? process.env.GOOGLE_CONNECTION_NAME : `http://localhost:3000`,
@@ -32,6 +33,8 @@ const main = async () => {
     });
 
     updateSubscriptions();
+
+    initCronJobs();
 
   } catch (error) {
     console.error("Unable to connect to the database:", error);

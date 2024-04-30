@@ -39,6 +39,20 @@ const getProductBySkuId = async (req, res) => {
   }
 };
 
+
+const loadProduct = async (req, res) => {
+  try {
+    const skuName = req.params.skuName;
+    const skuId = req.params.skuId;
+    const productName = req.params.productName;
+
+    
+  } catch (error) {
+    console.log("Error al cargar el producto: " + error);
+    return res.status(200).json(null);
+  }
+}
+
 module.exports = {
   getAllProductsBySkuIds,
   getProductBySkuId,

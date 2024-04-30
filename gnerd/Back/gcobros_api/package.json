@@ -27,6 +27,7 @@
     "handlebars": "^4.7.7",
     "jsonwebtoken": "^9.0.2",
     "moment": "^2.29.4",
+    "node-cron": "^3.0.3",
     "nodemailer": "^6.9.2",
     "nodemon": "^2.0.22",
     "pg": "^8.10.0",
