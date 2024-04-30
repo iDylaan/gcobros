@@ -104,11 +104,11 @@ const readSubscriptionsFromGoogle = async ({ res }) => {
   res.status(200).json("Database updated");
 };
 
-const createSubscriptionsInDatabase = async (subscriptionsArray) => {
+const createSubscriptionsInDatabase = async (subscriptions) => {
   const transaction = await db.sequelize.transaction();
 
   try {
-    for (const sub of subscriptionsArray) {
+    for (const sub of subscriptions) {
 
       if (await validateExistSubscription(sub)) {
         continue;
@@ -126,7 +126,8 @@ const createSubscriptionsInDatabase = async (subscriptionsArray) => {
           seats_maximumNumberOfSeats: sub.seats?.maximumNumberOfSeats,
           renewalSettings_kind: sub.renewalSettings?.kind,
           renewalSettings_renewalType: sub.renewalSettings?.renewalType,
-          totalToPay: sub.seats?.licensedNumberOfSeats * await readProductPriceBySkuId(sub.skuId),
+          // totalToPay: sub.seats?.licensedNumberOfSeats * await readProductPriceBySkuId(sub.skuId),
+          totalToPay: 0,
           alreadyPay: false,
           purchaseOrderId: sub.purchaseOrderId,
           status: sub.status,

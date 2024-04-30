@@ -61,7 +61,7 @@ const getCustomersFromGoogleWorkspace = async (req, res) => {
 
     const allCustomersIDs = subscriptionsArr.map((subscription) => subscription.customerId);
 
-    let allCustomers = await getCustomers(allCustomersIDs);
+    let allCustomers = await getCustomer(allCustomersIDs);
 
     return res.status(200).json(handleResponse(allCustomers));
   } catch (error) {
@@ -71,7 +71,7 @@ const getCustomersFromGoogleWorkspace = async (req, res) => {
 
 }
 
-async function getCustomers(customerIds) {
+async function getCustomer(customerIds) {
   const auth = getCredentials();
   const reseller = google.reseller({ version: "v1", auth });
   const customers = []

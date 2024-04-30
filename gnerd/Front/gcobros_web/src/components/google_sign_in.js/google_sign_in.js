@@ -14,19 +14,20 @@ export default function GoogleSingInButton() {
         variant="text"
         className={ui.buttonStyle}
         onClick={() => signIn("google", {
+          callbackUrl: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URIS,
           redirect: false,
         })}
       >
-          <Image
-            className={ui.googleLogo}
-            src="https://authjs.dev/img/providers/google.svg"
-            alt="google_logo"
-            width="28"
-            height="28"
-          />
-          {screenSize ? null : <Typography className={ui.textButton} >
-            Conectarse con Google
-          </Typography>}
+        <Image
+          className={ui.googleLogo}
+          src="https://authjs.dev/img/providers/google.svg"
+          alt="google_logo"
+          width="28"
+          height="28"
+        />
+        {screenSize ? null : <Typography className={ui.textButton} >
+          Conectarse con Google
+        </Typography>}
       </Button>
     </Box>
   );
