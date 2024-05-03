@@ -225,6 +225,7 @@ const onCancel = (paymentCanceled) => {
                   className={ui.googleButtonStyle}
                   buttonSizeMode="fill"
                   environment="TEST"
+                  buttonLocale="es"
                   paymentRequest={{
                     apiVersion: 2,
                     apiVersionMinor: 0,
