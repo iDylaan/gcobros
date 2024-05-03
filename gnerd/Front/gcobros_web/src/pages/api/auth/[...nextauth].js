@@ -1,17 +1,18 @@
 import NextAuth from "next-auth/next";
-import GoogleProvider from "next-auth/providers/google";
+import Google from "next-auth/providers/google";
 import { getAllDomains } from "../subscriptions/subscription_api";
 
 export const authOptions = {
+  debug: process.env.NODE_ENV === 'development',
   site: process.env.NEXTAUTH_URL,
   providers: [
-    GoogleProvider({
+    Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       authorization: {
         params: {
           prompt: "consent",
-          access_type: "offline",
+          access_type: "online",
           response_type: "code",
           redirect_uri: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URIS
         },
@@ -20,6 +21,7 @@ export const authOptions = {
   ],
   pages: {
     error: "/auth/error",
+    signIn: "/",
   },
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
@@ -49,7 +51,6 @@ export const authOptions = {
       return session
     }
   },
-  debug: process.env.NODE_ENV === 'development',
 };
 
 export default NextAuth(authOptions);

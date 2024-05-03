@@ -14,7 +14,6 @@ export default function GoogleSingInButton() {
         variant="text"
         className={ui.buttonStyle}
         onClick={() => signIn("google", {
-          callbackUrl: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URIS,
           redirect: false,
         })}
       >
