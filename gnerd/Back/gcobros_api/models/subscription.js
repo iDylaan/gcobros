@@ -51,7 +51,8 @@ module.exports = (sequelize, DataTypes) => {
       },
       totalToPay: {
         type: DataTypes.DOUBLE,
-        allowNull: false,
+        defaultValue: null,
+        allowNull: true,
       },
       alreadyPay: {
         type: DataTypes.BOOLEAN,

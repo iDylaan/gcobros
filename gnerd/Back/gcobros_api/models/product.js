@@ -34,15 +34,17 @@ module.exports = (sequelize, DataTypes) => {
     },
     monthlyPrice: {
       type:DataTypes.DOUBLE,
-      allowNull:false,
+      defaultValue: null,
+      allowNull:true,
     },
     yearlyPrice: {
       type: DataTypes.DOUBLE,
-      allowNull: false,
+      defaultValue: null,
+      allowNull: true,
     },
-    discount: {
-      type:DataTypes.INTEGER,
-      defaultValue: 0,
+    fixedPlan: {
+      type:DataTypes.BOOLEAN,
+      defaultValue: false,
       allowNull: false,
     }
   }, {

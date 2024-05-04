@@ -8,6 +8,7 @@ const db = require("./models/index");
 const express = require("express");
 const cors = require("cors");
 const { updateSubscriptions } = require("./controllers/automatic/subscriptions");
+const { updateProducts } = require("./controllers/automatic/products");
 const app = express();
 const { initCronJobs } = require('./controllers/schedulers/jobs.js');
 
@@ -31,8 +32,9 @@ const main = async () => {
     app.listen(port, () => {
       console.log(`App listening on port ${port}`);
     });
-
-    updateSubscriptions();
+    
+    await updateProducts();
+    await updateSubscriptions();
 
     initCronJobs();
 

@@ -1,26 +1,16 @@
 // const { authenticate } = require("@google-cloud/local-auth");
 const { google } = require("googleapis");
 const { handleResponse, handleErrorResponse } = require("./utils/misc.js");
+const { getCredentials } = require("./credentials.js");
+
 
 const SCOPES = [
   "https://www.googleapis.com/auth/apps.order",
   "https://www.googleapis.com/auth/siteverification",
 ];
 
-function getCredentials() {
-  const auth = new google.auth.GoogleAuth({
-    keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS_PATH,
-    scopes: SCOPES,
-    clientOptions: {
-      subject: "iconos@gnerd.mx",
-    },
-  });
-
-  return auth;
-}
-
 const getAllSubscriptionsFromGoogleWorkspace = async () => {
-  const auth = getCredentials();
+  const auth = getCredentials(SCOPES);
 
   const reseller = google.reseller({ version: "v1", auth });
 
