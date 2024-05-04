@@ -34,7 +34,6 @@ export const authOptions = {
         // Comprobración del catalogo de administradores
         console.log('Antes de obtener los administradores')
         const allAdmins = await getAllAdmins();
-        console.log(allAdmins);
         console.log('Despues de obtener los administradores')
         if (allAdmins.some(admin => admin.primaryEmail === profile.email)) {
           return true;
@@ -52,12 +51,15 @@ export const authOptions = {
       if (account) {
         token.accessToken = account.access_token
         token.id = profile.id
+        const allAdmins = await getAllAdmins();
+        token.isAdmin = allAdmins.some(admin => admin.primaryEmail === profile.email);
       }
       return token
     },
     async session({ session, token, user }) {
       session.accessToken = token.accessToken
       session.user.id = token.id
+      session.user.isAdmin = token.isAdmin;
       return session
     }
   },

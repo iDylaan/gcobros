@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { Box, Stack, Typography } from "@mui/material";
 import Palette from "../../constants/palette.js";
-import AdminNavbar from "../../components/navbar/admin_navbar.js";
+import Navbar from "../../components/navbar/navbar.js";
 import getCustomers from "../api/customers/getCustomers.js";
 
 export default function adminDashboard() {
@@ -28,7 +28,7 @@ export default function adminDashboard() {
     }, []);
     return (
         <Stack>
-            <AdminNavbar />
+            <Navbar />
             <Box bgcolor={Palette.primary} height="180px">
                 <Typography>
                 </Typography>

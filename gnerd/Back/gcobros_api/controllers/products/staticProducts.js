@@ -23,21 +23,6 @@ const STATIC_PRODUCTS = [
         monthlyPrice: 432.0,
         yearlyPrice: 4320.0,
     },
-    // {
-    //     skuId: null,
-    //     skuName: null,
-    //     productName: "Google Workspace Enterprise",
-    //     monthlyPrice: null.0,
-    //     yearlyPrice: null.0,
-    // },
-    // G SUITE
-    // {
-    //     skuId: 'Google-Apps-For-Business',
-    //     skuName: 'G Suite Basic',
-    //     productName: "G Suite Basic",
-    //     monthlyPrice: null.0,
-    //     yearlyPrice: null.0,
-    // },
     // EDUCATION
     {
         skuId: 'Google-Apps-For-Education',

@@ -28,8 +28,6 @@ export default function DashboardClient() {
       return;
     }
 
-    // console.log(data)
-
     setUserDomain(data?.user?.email?.split("@").pop());
 
     if (userDomain.length < 1) {

@@ -14,14 +14,15 @@ import LoadingPage from "../components/loading";
 import * as Palette from "../constants/palette";
 import { useRouter } from "next/router.js";
 import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 import MobileLoginPage from "../components/login_components/mobile_page";
 import GoogleSingInButton from "../components/google_sign_in.js/google_sign_in";
+import { getAllAdmins } from './api/directory/directory_api';
 
-function Item({item})
-{
-    return(
-        <img src={item.image} alt={item.title}style={{width: "100%", display: "block"}} />
-    );
+function Item({ item }) {
+  return (
+    <img src={item.image} alt={item.title} style={{ width: "100%", display: "block" }} />
+  );
 }
 
 const styles = {
@@ -42,16 +43,23 @@ export default function ColumnsGrid() {
   const router = useRouter();
   const { data, status } = useSession();
 
+
+  // useEffect(() => {
+  //   if (status === "authenticated") {
+  //     console.log(data)
+  //   }
+  // }, [status, data]);
+
+  
+
   if (status === "loading") {
     return <LoadingPage />;
   }
 
   if (status === "authenticated") {
     router.push({
-      pathname: "/dashboard",
+      pathname: data.user.isAdmin ? "/admin" : "/dashboard",
     });
-
-    
 
     return <LoadingPage />;;
   }
@@ -61,9 +69,9 @@ export default function ColumnsGrid() {
       {isMobileScreen || isMobileScreenH ? (
         <MobileLoginPage />
       ) : (
-        <Box sx={{ flexGrow: 1, height:"100vh", width: "100vw" }}>
+        <Box sx={{ flexGrow: 1, height: "100vh", width: "100vw" }}>
           <Grid container spacing={0} columns={16} >
-            <Grid item xs={8} sx={{height: "100vh",width: "100%",}}>
+            <Grid item xs={8} sx={{ height: "100vh", width: "100%", }}>
               <Container>
                 <Stack
                   justifyContent="center"
@@ -74,7 +82,7 @@ export default function ColumnsGrid() {
                     backgroundColor: "white",
                   }}
                 >
-                  <Container sx={{marginTop: "15%"}}>
+                  <Container sx={{ marginTop: "15%" }}>
                     <Image
                       src={{
                         src: "/images/gnerd_logo.png",
@@ -93,13 +101,13 @@ export default function ColumnsGrid() {
                     color={Palette.darkGrey}
                     paddingTop="4%"
                   >Conéctate con tu cuenta Google para ingresar.</Typography>
-                  <GoogleSingInButton/>
+                  <GoogleSingInButton />
                   <Typography
                     variant="subtitle1"
                     color={Palette.darkGrey}
                     paddingTop="10%"
-                  >Sé más eficiente con herramientas de productividad empresarial y 
-                  colaboración.
+                  >Sé más eficiente con herramientas de productividad empresarial y
+                    colaboración.
                   </Typography >
                   <Typography variant="subtitle2" paddingTop="2%"></Typography>
                   <Link href="https://www.gnerd.mx/" fontWeight="bold" >
@@ -112,7 +120,7 @@ export default function ColumnsGrid() {
               style={styles.containerImg}
             >
               <Carousel
-                sx={{backgroundColor: "transparent", width: "100%"}}
+                sx={{ backgroundColor: "transparent", width: "100%" }}
                 indicatorIconButtonProps={{
                   style: {
                     padding: '10px',
@@ -126,14 +134,14 @@ export default function ColumnsGrid() {
                 indicatorContainerProps={{
                   style: {
                     marginTop: "-25%"
-                    }
+                  }
                 }}
                 navButtonsAlwaysInvisible={true}
                 stopAutoPlayOnHover={false}
                 interval={"5000"}
               >
                 {
-                  slider.map( item => <Item key={item.id} item={item} /> )
+                  slider.map(item => <Item key={item.id} item={item} />)
                 }
               </Carousel>
             </Grid>
