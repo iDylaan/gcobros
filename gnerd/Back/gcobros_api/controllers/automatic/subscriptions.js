@@ -12,7 +12,6 @@ async function updateSubscriptions() {
   // Obtenemos todas las subscripciones mandando a llamar a la API de Google de manera periodica
   // para saber si hay nuevos clientes e ir actualizando la base de datos.
   const allSubscriptions = await getAllSubscriptionsFromGoogleWorkspace();
-  console.log(allSubscriptions);
 
   // Guardamos todas las subscripciones en la base de datos, si ya existen validamos si tuvieron cambios,
   // la documentación google dice que cada vez que hay un cambio el "subscriptionId" se actualiza, entonces

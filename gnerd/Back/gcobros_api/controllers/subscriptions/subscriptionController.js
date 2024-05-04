@@ -164,7 +164,7 @@ const createSubscriptionsInDatabase = async (subscriptions) => {
 
 const readProductPriceBySkuId = async (skuId) => {
   const { monthlyPrice: productPrice } = await Product.findOne({
-    where:{
+    where: {
       skuId: skuId,
     }
   });
@@ -174,43 +174,6 @@ const readProductPriceBySkuId = async (skuId) => {
   }
   return productPrice;
 }
-
-const createProductsInDatabase = async (subscriptions) => {
-  const transaction = await db.sequelize.transaction();
-
-  let productsSkuIdAdded = [];
-
-  try {
-    for (const sub of subscriptions) {
-
-      if (productsSkuIdAdded.includes(sub.skuId) || await validateExistProduct(sub.skuId)) {
-        continue;
-      }
-
-      await Product.create(
-        {
-          productName: sub.skuName,
-          skuId: sub.skuId,
-          skuName: sub.skuName,
-          monthlyPrice: 0.0,
-          yearlyPrice: 0.0,
-          discount: 0,
-        },
-        { transaction: transaction }
-      );
-
-      // PREVENT DUPLICATES skuId
-      productsSkuIdAdded.push(sub.skuId);
-    }
-
-    await transaction.commit();
-  } catch (error) {
-    console.error(
-      "Ocurrio un error al agregar los productos a la base de datos: " + error
-    );
-    await transaction.rollback();
-  }
-};
 
 async function validateExistSubscription(sub) {
   const subscription = await Subscription.findOne({
@@ -227,14 +190,14 @@ async function validateExistSubscription(sub) {
   // Si la subscripcion es diferente a la que esta almacenada en base de datos,
   // quiere decir que se actualizó y necesita ser actualizada en base de datos tambien.
   if (subscription.subscriptionId != sub.subscriptionId) {
-    updateSubscriptionLocal({oldSubscription: subscription, newSubscription: sub});
+    updateSubscriptionLocal({ oldSubscription: subscription, newSubscription: sub });
     return true;
   }
 
   return true;
 }
 
-const updateSubscriptionLocal = async ({oldSubscription, newSubscription}) => {
+const updateSubscriptionLocal = async ({ oldSubscription, newSubscription }) => {
   try {
 
     if (oldSubscription.alreadyPay == true) {
@@ -328,20 +291,6 @@ async function getTotalPayment(skuId, licenses, planName) {
     console.log("Error al asignar: " + error);
     return 0.0;
   }
-}
-
-async function validateExistProduct(skuId) {
-  const product = await Product.findOne({
-    where: {
-      skuId: skuId,
-    },
-  });
-
-  if (product === null) {
-    return false;
-  }
-
-  return true;
 }
 
 // returns all customer domains
