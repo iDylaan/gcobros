@@ -15,7 +15,7 @@ import MobileNavbar from "./mobile/mobile_navbar.js";
 export default function Navbar() {
   const isMobileScreen = useMediaQuery("(max-width: 1000px)");
   const router = useRouter();
-  const { data: session, status } = useSession({
+  const { data, data: session, status } = useSession({
     required: true,
     onUnauthenticated(){
       router.push("/");
@@ -23,7 +23,7 @@ export default function Navbar() {
   });
 
   function dashboard() {
-    router.push("/dashboard");
+    router.push(data.user.isAdmin ? "/admin" : "/dashboard");
   }
 
   return isMobileScreen ? (

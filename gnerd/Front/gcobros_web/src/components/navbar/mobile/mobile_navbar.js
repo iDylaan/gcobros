@@ -6,16 +6,17 @@ import {
   MenuItem,
   IconButton,
 } from "@mui/material";
+import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import ui from "./index.module.css";
 import { MenuRounded } from "@mui/icons-material";
-import { jwtLogout } from "../../../helper/jwt.js";
 
 export default function MobileNavbar(userInfo) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const router = useRouter();
+  const { data } = useSession();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -24,13 +25,8 @@ export default function MobileNavbar(userInfo) {
     setAnchorEl(null);
   };
 
-  function logout() {
-    jwtLogout();
-    router.push("/admin_signin");
-  }
-
   function dashboard() {
-    router.push("/admin");
+    router.push(data.user.isAdmin ? "/admin" : "/dashboard");
   }
 
   return (
@@ -63,7 +59,9 @@ export default function MobileNavbar(userInfo) {
         }}
       >
         <MenuItem
-        onClick={logout}
+          onClick={() => {
+            signOut("google");
+          }}
         >
           <Typography fontSize="1rem">Cerrar sesión</Typography>
         </MenuItem>

@@ -28,10 +28,6 @@ export function getAdminData() {
   }
 }
 
-export function jwtLogout() {
-  localStorage.removeItem('token');
-}
-
 export const jwt = () => localStorage.getItem('token') || '';
 
 export function verifyJWT(token) {
