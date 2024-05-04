@@ -1,6 +1,7 @@
 import NextAuth from "next-auth/next";
 import Google from "next-auth/providers/google";
 import { getAllDomains } from "../subscriptions/subscription_api";
+import { getAllAdmins } from '../directory/directory_api';
 
 export const authOptions = {
   debug: process.env.NODE_ENV === 'development',
@@ -30,7 +31,16 @@ export const authOptions = {
         return false;
       }
       try {
-        return true;
+        // Comprobración del catalogo de administradores
+        console.log('Antes de obtener los administradores')
+        const allAdmins = await getAllAdmins();
+        console.log(allAdmins);
+        console.log('Despues de obtener los administradores')
+        if (allAdmins.some(admin => admin.primaryEmail === profile.email)) {
+          return true;
+        }
+
+        // Comprobración del catalogo de customers
         const allAllowedDomains = await getAllDomains();
         return allAllowedDomains.some(domain => profile.email.endsWith(domain.customerDomain));
       } catch (error) {

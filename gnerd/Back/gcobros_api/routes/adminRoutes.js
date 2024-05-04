@@ -7,6 +7,7 @@ const {
     createAdmin
 } = require("../controllers/admins/adminController");
 
+
 router.post("/signin", signinAdmin);
 router.post("/create", verifyJWT, createAdmin);
 

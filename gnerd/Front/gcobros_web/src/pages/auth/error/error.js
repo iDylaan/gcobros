@@ -9,13 +9,13 @@ export default function ErrorPage() {
     <>
       <Navbar />
       <Stack className={ui.mainStack} direction="row">
-        <Box className={ui.mainBox} sx={{marginLeft: 2, marginRight: 2}}>
+        <Box className={ui.mainBox} sx={{ marginLeft: 2, marginRight: 2 }}>
           <Stack spacing={2}>
             <Typography className={ui.title}>Acceso denegado</Typography>
             <Typography className={ui.description}>
               Lo sentimos, no encontramos una cuenta registrada con G Nerd
             </Typography>
-            <Link className={ui.link} underline="none" onClick={()=>{
+            <Link className={ui.link} underline="none" onClick={() => {
               router.push("/");
             }}>
               <Button variant="text" className={ui.linkText}>VOLVER AL INICIO</Button>
