@@ -8,7 +8,6 @@ const subscriptionApi = require("./subscriptionRoutes")
 const productApi = require("./productRoutes");
 const transactionApi = require("./transactionRoutes");
 const stripeApi = require("./stripeRoutes");
-const adminApi = require("./adminRoutes");
 const customerApi = require("./customerRoutes");
 const directoryApi = require('./directoryRoutes');
 
@@ -18,7 +17,6 @@ router.use('/api/subscriptions', subscriptionApi);
 router.use('/api/products', productApi);
 router.use('/api/transactions', transactionApi);
 router.use('/api/stripe', stripeApi);
-router.use('/api/admins', adminApi);
 router.use('/api/directory', directoryApi);
 router.use('/api/customers', customerApi);
 
