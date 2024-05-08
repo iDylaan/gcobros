@@ -131,6 +131,8 @@ export default function Payment_Details_Mobile({
                   className={ui.googleButtonStyle}
                   buttonSizeMode="fill"
                   environment="TEST"
+                  buttonType="pay"
+                  buttonLocale="es"
                   paymentRequest={{
                     apiVersion: 2,
                     apiVersionMinor: 0,
