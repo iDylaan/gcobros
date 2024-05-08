@@ -110,42 +110,46 @@ export default function Payment_Details() {
   }, [status, domain, data]);
 
   // on load paymenth data from google pay button response
-const onLoadPaymentData = (paymentRequest) => {
-  if (!paymentRequest?.paymentMethodData?.tokenizationData?.token) {
-    return;
+  const onLoadPaymentData = (paymentRequest) => {
+    if (!paymentRequest?.paymentMethodData?.tokenizationData?.token) {
+      return;
+    }
+
+    console.log(paymentRequest);
+
+    createPaymentInStripe({ customerEmail: data?.user?.email, paymentRequest }).then((result) => {
+      if (result.status !== paymentStatus.failed) {
+        return router.replace({ pathname: './payment_success', query: { id: result.id } });
+      }
+    });
+  };
+
+  // On error payment
+  const onError = (paymentError) => {
+    //! When error ocurred
+    console.log("Payment error data: ", paymentError);
+    return router.replace('./payment_error')
   }
 
-  console.log(paymentRequest);
-
-  createPaymentInStripe({ customerEmail: data?.user?.email, paymentRequest }).then((result) => {
-    if (result.status !== paymentStatus.failed) {
-      return router.replace({pathname: './payment_success', query: {id: result.id}});
-    }
-  });
-};
-
-// On error payment
-const onError = (paymentError) => {
-  //! When error ocurred
-  console.log("Payment error data: ", paymentError);
-  return router.replace('./payment_error')
-}
-
-// on canceled payment
-const onCancel = (paymentCanceled) => {
-  //* When user close the Google Pay Dialog
-}
+  // on canceled payment
+  const onCancel = (paymentCanceled) => {
+    //* When user close the Google Pay Dialog
+  }
 
   return (
     <>
       {isMobileScreen ? (
-        <Payment_Details_Mobile totalPrice={totalPrice} subscriptionsRow={subscriptionsRow} email={data?.user?.email} today={today}/>
+        <Payment_Details_Mobile totalPrice={totalPrice} subscriptionsRow={subscriptionsRow} email={data?.user?.email} today={today} />
       ) : (
         <Stack>
           <Navbar></Navbar>
           <Grid container spacing={4}>
-            <Grid item xs={8}>
-              <Box sx={{ paddingTop: 5, paddingLeft: 5 }}>
+            <Grid item xs={5.5} style={{ overflow: 'hidden' }} >
+              <img style={{ paddingLeft: 60, paddingTop: 45, height: '650px', width: '100%', objectPosition: "center", objectFit: "contain" }} 
+              src="/images/pay-details-ilustration.webp" alt="Imagen" />
+            </Grid>
+            <Grid item xs={6}>
+              <Box sx={{ paddingTop: 5 }}>
                 <Typography className={ui.titlePadding} variant="h5">
                   Detalle de pago
                   <span
@@ -190,9 +194,7 @@ const onCancel = (paymentCanceled) => {
                   </Table>
                 </TableContainer>
               </Box>
-            </Grid>
-            <Grid item xs={4}>
-              <Box sx={{ paddingRight: 5, paddingTop: 11 }}>
+              <Box sx={{ paddingTop: 11 }}>
                 <Typography className={ui.titlePadding} variant="h5">
                   Total a pagar
                 </Typography>
@@ -225,6 +227,7 @@ const onCancel = (paymentCanceled) => {
                   className={ui.googleButtonStyle}
                   buttonSizeMode="fill"
                   environment="TEST"
+                  buttonType="pay"
                   buttonLocale="es"
                   paymentRequest={{
                     apiVersion: 2,
