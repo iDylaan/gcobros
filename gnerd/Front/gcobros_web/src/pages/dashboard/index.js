@@ -63,7 +63,7 @@ export default function DashboardClient() {
         <BalanceCard
           domain={userDomain}
           subscriptions={domainSubscriptions}
-          toPay={toPay}
+          toPay={toPay * 1.16}
           customerId={customerId}
         />
       </Box>
