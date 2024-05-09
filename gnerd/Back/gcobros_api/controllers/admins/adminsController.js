@@ -19,7 +19,7 @@ const createAdmin = async (req, res) => {
 
 
         if (!userInDB) {
-            const user = await getUserByEmail('iconos@gnerd.mx');
+            const user = await getUserByEmail(email);
 
             if (!user) {
                 return res.status(400).json(handleErrorResponse({ message: 'El correo electrónico no es válido.' }));
@@ -47,6 +47,27 @@ const createAdmin = async (req, res) => {
     }
 }
 
+
+const validateIsValidAdmin = async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        if (!email) {
+            return res.status(400).json(handleErrorResponse({ message: 'El correo electrónico es requerido.' }));
+        }
+        const userInDB = await Admin.findOne({ where: { primaryEmail: email, suspended: false } });
+        if (!userInDB) {
+            res.status(400).json(handleErrorResponse({ message: 'Administrador no válido.' }));
+        } else {
+            res.json(handleResponse(userInDB));
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json(handleErrorResponse({ message: "Error interno del servidor" }));
+    }
+}
+
 module.exports = {
     createAdmin,
+    validateIsValidAdmin
 };

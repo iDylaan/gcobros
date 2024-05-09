@@ -2,6 +2,7 @@ import NextAuth from "next-auth/next";
 import Google from "next-auth/providers/google";
 import { getAllDomains } from "../subscriptions/subscription_api";
 import { getAllAdmins } from '../directory/directory_api';
+import { validateAdmin } from '../admin/admin_api';
 
 export const authOptions = {
   debug: process.env.NODE_ENV === 'development',
@@ -32,10 +33,8 @@ export const authOptions = {
       }
       try {
         // Comprobración del catalogo de administradores
-        console.log('Antes de obtener los administradores')
-        const allAdmins = await getAllAdmins();
-        console.log('Despues de obtener los administradores')
-        if (allAdmins.some(admin => admin.primaryEmail === profile.email)) {
+        const isValidAdmin = await validateAdmin(profile.email);
+        if (isValidAdmin) {
           return true;
         }
 
