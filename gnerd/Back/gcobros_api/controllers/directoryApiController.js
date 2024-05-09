@@ -26,7 +26,24 @@ const getAllUsers = async () => {
     }
 }
 
+const getUserByEmail = async (email) => {
+    try {
+        const auth = getCredentials(SCOPES);
+        const directory = google.admin({ version: 'directory_v1', auth });
+
+        const user = await directory.users.get({
+            userKey: email,
+        });
+
+        return user.data;
+    } catch (error) {
+        console.log("Error al obtener los usuarios: " + error);
+        return null;
+    }
+}
+
 
 module.exports = {
     getAllUsers,
+    getUserByEmail
 }
