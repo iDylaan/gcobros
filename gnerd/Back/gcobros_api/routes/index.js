@@ -10,9 +10,11 @@ const transactionApi = require("./transactionRoutes");
 const stripeApi = require("./stripeRoutes");
 const customerApi = require("./customerRoutes");
 const directoryApi = require('./directoryRoutes');
+const adminApi = require('./adminRoutes');
 
 //endPoints
 router.use('/api/test', TestApi);
+router.use('/api/admin', adminApi);
 router.use('/api/subscriptions', subscriptionApi);
 router.use('/api/products', productApi);
 router.use('/api/transactions', transactionApi);
