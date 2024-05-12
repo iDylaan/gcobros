@@ -9,6 +9,7 @@ const express = require("express");
 const cors = require("cors");
 const { updateSubscriptions } = require("./controllers/automatic/subscriptions");
 const { updateProducts } = require("./controllers/automatic/products");
+const { updateCustomers } = require("./controllers/automatic/customers");
 const app = express();
 const { initCronJobs } = require('./controllers/schedulers/jobs.js');
 
@@ -35,6 +36,7 @@ const main = async () => {
     
     await updateProducts();
     await updateSubscriptions();
+    await updateCustomers();
 
     initCronJobs();
 

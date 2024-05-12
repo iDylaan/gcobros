@@ -17,7 +17,7 @@ export default function Navbar() {
   const router = useRouter();
   const { data, data: session, status } = useSession({
     required: true,
-    onUnauthenticated(){
+    onUnauthenticated() {
       router.push("/");
     }
   });
@@ -41,7 +41,7 @@ export default function Navbar() {
         />
       </Box>
       <Box className={ui.profileBox}>
-        <ProfileAvatar userInfo={session}/>
+        <ProfileAvatar userInfo={session} />
         <Box marginRight="60px">
           <Typography fontSize="18px">{session?.user?.name}</Typography>
           <Typography fontSize="15px" color={Palette.grey}>
