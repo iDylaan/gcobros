@@ -17,6 +17,16 @@ const createSubscription = async (req, res) => {
   }
 };
 
+const getAllSubscriptions = async () => {
+  try {
+    const subscriptions = await Subscription.findAll();
+    return subscriptions;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+}
+
 const readSubscription = async ({ res }) => {
   try {
     let subscriptions = await Subscription.findAll();
@@ -131,7 +141,7 @@ const createSubscriptionsInDatabase = async (subscriptions) => {
           purchaseOrderId: sub.purchaseOrderId,
           status: sub.status,
           resourceUiUrl: sub.resourceUiUrl,
-          billingMethod: sub.billingMethod,
+          billingMethod: sub.billingMethod, 
           customerDomain: sub.customerDomain,
           dealCode: sub.dealCode,
           skuName: sub.skuName,
@@ -340,4 +350,5 @@ module.exports = {
   readAllAllowedDomains,
   readSubscriptionsByCustomerDomain,
   createSubscriptionsInDatabase,
+  getAllSubscriptions
 };

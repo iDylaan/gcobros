@@ -30,6 +30,7 @@ Table subscriptions {
   customerDomain STRING
   dealCode STRING
   skuName STRING
+  plan_paymentFrequency BOOLEAN
   plan_planName STRING
   plan_isCommitmentPlan BOOLEAN
   plan_commitmentInterval_startTime STRING
@@ -46,6 +47,8 @@ Table transactions {
   domain STRING
   chargeId STRING
   amount INTEGER
+  payment_open_day STRING
+  payment_limit_day STRING
   amount_captured INTEGER
   amount_refunded INTEGER
   balance_transaction STRING
@@ -70,6 +73,7 @@ Table customers {
   customerDomain STRING
   customerName STRING
   organizationName STRING
+  paymentsActive BOOLEAN
   active BOOLEAN
 }
 

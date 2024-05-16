@@ -89,6 +89,11 @@ module.exports = (sequelize, DataTypes) => {
       plan_planName: {
         type: DataTypes.STRING,
       },
+      plan_paymentFrequency: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "FLEXIBLE_MONTH"
+      },
       plan_isCommitmentPlan: {
         type: DataTypes.BOOLEAN,
       },

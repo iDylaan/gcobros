@@ -15,35 +15,40 @@ module.exports = (sequelize, DataTypes) => {
   }
   Customer.init({
     id: {
-      type:DataTypes.UUID,
+      type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       allowNull: false,
       primaryKey: true,
     },
     customerId: {
-        type:DataTypes.STRING,
-        allowNull: false
+      type: DataTypes.STRING,
+      allowNull: false
     },
     customerDomain: {
-        type:DataTypes.STRING,
-        allowNull: false
+      type: DataTypes.STRING,
+      allowNull: false
     },
     customerName: {
-        type:DataTypes.STRING,
-        allowNull: true
+      type: DataTypes.STRING,
+      allowNull: true
     },
     organizationName: {
-        type:DataTypes.STRING,
-        allowNull: true
+      type: DataTypes.STRING,
+      allowNull: true
     },
     countryCode: {
-        type:DataTypes.STRING,
-        allowNull: true
+      type: DataTypes.STRING,
+      allowNull: true
     },
     active: {
-        type:DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: true
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true
+    },
+    paymentsActive: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true
     }
   }, {
     sequelize,

@@ -13,7 +13,6 @@ const getCustomers = async (req, res) => {
     }
 }
 
-
 async function validateExistCustomer(customer) {
     const customerInDB = await Customer.findOne({
         where: {
@@ -61,6 +60,8 @@ const createCustomersInDatabase = async (customers) => {
     }
 };
 
+
+// ----------------------------------------------------------------------------- //
 
 module.exports = {
     createCustomersInDatabase,

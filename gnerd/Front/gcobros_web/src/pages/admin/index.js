@@ -93,8 +93,8 @@ export default function adminDashboard() {
                             <TableHead>
                                 <TableRow>
                                     <TableCell>ID</TableCell>
+                                    <TableCell>Nombre</TableCell>
                                     <TableCell>Dominio</TableCell>
-                                    <TableCell>Organización</TableCell>
                                     <TableCell>Contacto</TableCell>
                                     <TableCell>País</TableCell>
                                     <TableCell>Fecha de próximo pago</TableCell>
@@ -105,8 +105,8 @@ export default function adminDashboard() {
                                 {paginatedCustomers.map((customer) => (
                                     <TableRow key={customer.customerId}>
                                         <TableCell>{customer.customerId}</TableCell>
-                                        <TableCell>{customer.customerDomain}</TableCell>
                                         <TableCell>{customer.organizationName}</TableCell>
+                                        <TableCell>{customer.customerDomain}</TableCell>
                                         <TableCell>{customer.customerName}</TableCell>
                                         <TableCell>{customer.countryCode}</TableCell>
                                         {/* <TableCell>{customer.nextPaymentDate}</TableCell> */}

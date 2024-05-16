@@ -75,6 +75,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      payment_open_day: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      payment_limit_day: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       reference: {
         type: DataTypes.STRING,
         allowNull: true,

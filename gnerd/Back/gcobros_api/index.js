@@ -10,6 +10,7 @@ const cors = require("cors");
 const { updateSubscriptions } = require("./controllers/automatic/subscriptions");
 const { updateProducts } = require("./controllers/automatic/products");
 const { updateCustomers } = require("./controllers/automatic/customers");
+const { updateTransactions } = require("./controllers/automatic/transactions");
 const app = express();
 const { initCronJobs } = require('./controllers/schedulers/jobs.js');
 
@@ -34,9 +35,10 @@ const main = async () => {
       console.log(`App listening on port ${port}`);
     });
     
-    await updateProducts();
-    await updateSubscriptions();
-    await updateCustomers();
+    await updateTransactions();
+    // await updateProducts();
+    // await updateSubscriptions();
+    // await updateCustomers();
 
     initCronJobs();
 
