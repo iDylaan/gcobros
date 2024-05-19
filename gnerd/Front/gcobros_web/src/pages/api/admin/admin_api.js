@@ -10,10 +10,6 @@ export async function validateAdmin(email) {
 
         const result = await response.json();
 
-        if (!response.ok) {
-            throw new Error(result.error.message || 'Error inesperado en el servidor.');
-        }
-
         return result.success && result.data;
     } catch (error) {
         throw new Error(error.message);
