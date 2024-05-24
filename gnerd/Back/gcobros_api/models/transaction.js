@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       chargeId: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       amount: {
         type: DataTypes.INTEGER,
@@ -33,27 +33,31 @@ module.exports = (sequelize, DataTypes) => {
       },
       amount_captured: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       amount_refunded: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       balance_transaction: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       description: {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      planName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       paid: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
+        allowNull: true,
       },
       payment_method: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       receipt_email: {
         type: DataTypes.STRING,
@@ -61,11 +65,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       refunded: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
+        allowNull: true,
       },
       created: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       merchant_amount: {
         type: DataTypes.INTEGER,
@@ -83,6 +87,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      subscriptionId: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      skuName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       reference: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -97,7 +109,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       currency: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       status: {
         type: DataTypes.STRING,

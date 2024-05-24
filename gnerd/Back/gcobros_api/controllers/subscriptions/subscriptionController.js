@@ -141,7 +141,7 @@ const createSubscriptionsInDatabase = async (subscriptions) => {
           purchaseOrderId: sub.purchaseOrderId,
           status: sub.status,
           resourceUiUrl: sub.resourceUiUrl,
-          billingMethod: sub.billingMethod, 
+          billingMethod: sub.billingMethod,
           customerDomain: sub.customerDomain,
           dealCode: sub.dealCode,
           skuName: sub.skuName,
