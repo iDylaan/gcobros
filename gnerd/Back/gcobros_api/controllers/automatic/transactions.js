@@ -75,7 +75,7 @@ async function updateTransactions() {
                 payment_open_day: today,
                 payment_limit_day: startDate,
                 planName: planName,
-                status: "TO_PAY"
+                status: "TO_PAY" 
               })
             }
           }
