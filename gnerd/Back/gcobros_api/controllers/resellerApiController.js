@@ -40,42 +40,30 @@ const getAllSubscriptionsFromGoogleWorkspace = async () => {
   return allSubscriptions;
 };
 
-const getCustomersFromGoogleWorkspace = async (req, res) => {
-  const auth = getCredentials();
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+const getCustomersFromGoogleWorkspace = async () => {
+  const auth = getCredentials(SCOPES);
 
   const reseller = google.reseller({ version: "v1", auth });
 
   try {
-    let subscriptionsPage = await reseller.subscriptions.list();
-    const subscriptionsArr = subscriptionsPage.data.subscriptions
-
-    const allCustomersIDs = subscriptionsArr.map((subscription) => subscription.customerId);
-
-    let allCustomers = await getCustomer(allCustomersIDs);
-
-    return res.status(200).json(handleResponse(allCustomers));
-  } catch (error) {
-    console.log(error);
-    return res.status(400).json(handleErrorResponse({ message: error }));
-  }
-
-}
-
-async function getCustomer(customerIds) {
-  const auth = getCredentials();
-  const reseller = google.reseller({ version: "v1", auth });
-  const customers = []
-  try {
-    for (const customerId of customerIds) {
+    let subscriptions = await getAllSubscriptionsFromGoogleWorkspace();
+    const customersIds = subscriptions.map((subscription) => subscription.customerId);
+    const uniqueCustomerIds = [...new Set(customersIds)];
+    const customers = []
+    for (const customerId of uniqueCustomerIds) {
       const customer = await reseller.customers.get({ customerId });
       customers.push(customer.data);
+
+      // Esperar 200ms antes de la siguiente solicitud (para no sobrecargar la API de Google Workspace)
+      await delay(200);
     }
+    return customers;
   } catch (error) {
-    console.log('Error en la consulta del customer ', customerId);
     console.log(error);
+    return [];
   }
-  
-  return customers;
 }
 
 module.exports = {

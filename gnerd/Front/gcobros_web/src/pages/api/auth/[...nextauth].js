@@ -36,11 +36,11 @@ export const authOptions = {
         const isValidAdmin = await validateAdmin(profile.email);
         if (isValidAdmin) {
           return true;
+        } else {
+          // Comprobración del catalogo de customers
+          const allAllowedDomains = await getAllDomains();
+          return allAllowedDomains.some(domain => profile.email.endsWith(domain.customerDomain));
         }
-
-        // Comprobración del catalogo de customers
-        const allAllowedDomains = await getAllDomains();
-        return allAllowedDomains.some(domain => profile.email.endsWith(domain.customerDomain));
       } catch (error) {
         console.error("Error fetching allowed domains:", error);
         return false;

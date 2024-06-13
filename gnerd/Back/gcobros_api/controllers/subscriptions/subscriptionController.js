@@ -17,6 +17,16 @@ const createSubscription = async (req, res) => {
   }
 };
 
+const getAllSubscriptions = async () => {
+  try {
+    const subscriptions = await Subscription.findAll();
+    return subscriptions;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+}
+
 const readSubscription = async ({ res }) => {
   try {
     let subscriptions = await Subscription.findAll();
@@ -340,4 +350,5 @@ module.exports = {
   readAllAllowedDomains,
   readSubscriptionsByCustomerDomain,
   createSubscriptionsInDatabase,
+  getAllSubscriptions
 };

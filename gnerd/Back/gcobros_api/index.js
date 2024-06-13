@@ -1,7 +1,7 @@
 const path = require("path");
 // Cargar el archivo .env del ambiente correspondiente
 require('dotenv').config({
-  path: path.resolve(process.cwd(), `.env.${process.env.NODE_ENV}`)
+  path: path.resolve(process.cwd(), `.env`)
 });
 
 const db = require("./models/index");
@@ -9,11 +9,13 @@ const express = require("express");
 const cors = require("cors");
 const { updateSubscriptions } = require("./controllers/automatic/subscriptions");
 const { updateProducts } = require("./controllers/automatic/products");
+const { updateCustomers } = require("./controllers/automatic/customers");
+const { updateTransactions } = require("./controllers/automatic/transactions");
 const app = express();
 const { initCronJobs } = require('./controllers/schedulers/jobs.js');
 
 const corsOptions = {
-  origin: process.env.NODE_ENV == "production" ? process.env.GOOGLE_CONNECTION_NAME : `http://localhost:3000`,
+  origin: `http://localhost:3000`,
 };
 
 app.use(express.json());
@@ -35,6 +37,8 @@ const main = async () => {
     
     await updateProducts();
     await updateSubscriptions();
+    await updateCustomers();
+    await updateTransactions();
 
     initCronJobs();
 

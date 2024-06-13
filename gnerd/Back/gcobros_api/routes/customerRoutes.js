@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 const {
-    getCustomersFromGoogleWorkspace
-} = require("../controllers/resellerApiController.js");
+    getCustomers
+} = require("../controllers/customers/customerController.js");
 
-router.get("/", getCustomersFromGoogleWorkspace);
+router.get("/", getCustomers);
 
 module.exports = router;

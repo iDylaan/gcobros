@@ -209,3 +209,9 @@ credentials.json
 /credentials.json
 token.json
 gnerd/Front/gcobros_web/.env.develpment
+
+# ssh-keys
+gnerd/ssh-keys/*
+gnerd/ssh-keys/gcobros-ssh
+gnerd/ssh-keys/gcobros-ssh.pub
+gnerd/ssh-keys/root-pwd
