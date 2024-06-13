@@ -36,8 +36,5 @@
     "sequelize-cli": "^6.6.0",
     "stripe": "^12.18.0",
     "validator": "^13.11.0"
-  },
-  "devDependencies": {
-    "cross-env": "^7.0.3"
   }
 }
