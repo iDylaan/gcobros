@@ -17,7 +17,7 @@ import Palette from "../../constants/palette.js";
 import Navbar from "../../components/navbar/navbar.js";
 import getCustomers from "../api/customers/getCustomers.js";
 
-export default function adminDashboard() {
+export default function AdminDashboard() {
 
     // Variables
     const [customers, setCustomers] = useState([]);

@@ -3,7 +3,6 @@ import "../../index.css";
 import LoadingPage from "../components/loading";
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import { AdminAuthProvider } from './context/AdminAuthContext';
 
 const stripePromise = loadStripe(`${process.env.STRIPE_API_KEY}`);
 
@@ -23,7 +22,6 @@ export default function App({
 }) {
   return (
     <SessionProvider>
-      <AdminAuthProvider>
         {Component.auth ? (
           <Auth>
             <Elements stripe={stripePromise}>
@@ -35,7 +33,6 @@ export default function App({
             <Component {...pageProps} />
           </Elements>
         )}
-      </AdminAuthProvider>
     </SessionProvider>
   );
 }
