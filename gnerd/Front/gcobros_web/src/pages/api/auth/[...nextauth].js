@@ -22,7 +22,7 @@ export const authOptions = {
     }),
   ],
   pages: {
-    error: "/auth/error",
+    error: "/access-denied",
     signIn: "/",
   },
   secret: process.env.NEXTAUTH_SECRET,

@@ -4,6 +4,41 @@ const { getUserByEmail } = require('../directoryApiController.js');
 const { Admin } = require('../../models/index');
 
 
+const activateAdmin = async (req, res) => {
+    try {
+        const { id } = req.body;
+        const admin = await Admin.findByPk(id);
+        admin.update({ active: true });
+        return res.json(handleResponse(admin));
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json(handleErrorResponse({ message: error }));
+    }
+};
+
+const desactivateAdmin = async (req, res) => {
+    try {
+        const { id } = req.body;
+        const admin = await Admin.findByPk(id);
+        admin.update({ active: false });
+        return res.json(handleResponse(admin));
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json(handleErrorResponse({ message: error }));
+    }
+}
+
+const getAdmins = async (req, res) => {
+    try {
+        const admins = await Admin.findAll();
+        console.log(admins);
+        return res.json(handleResponse(admins));
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json(handleErrorResponse({ message: error }));
+    }
+}
+
 const createAdmin = async (req, res) => {
     try {
         const { email } = req.body;
@@ -15,7 +50,6 @@ const createAdmin = async (req, res) => {
         // Validar si el usuario ya esta registrado en el sistema
         const transaction = await db.sequelize.transaction();
         const userInDB = await Admin.findOne({ where: { primaryEmail: email } });
-        console.log(userInDB);
 
 
         if (!userInDB) {
@@ -69,5 +103,8 @@ const validateIsValidAdmin = async (req, res) => {
 
 module.exports = {
     createAdmin,
-    validateIsValidAdmin
+    validateIsValidAdmin,
+    getAdmins,
+    activateAdmin,
+    desactivateAdmin
 };

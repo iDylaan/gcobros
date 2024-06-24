@@ -11,8 +11,11 @@ import {
     TableRow,
     Paper,
     TablePagination,
-    CircularProgress
+    CircularProgress,
+    Link,
+    Button
 } from "@mui/material";
+import { useRouter } from "next/router";
 import Palette from "../../constants/palette.js";
 import Navbar from "../../components/navbar/navbar.js";
 import getCustomers from "../api/customers/getCustomers.js";
@@ -20,6 +23,7 @@ import getCustomers from "../api/customers/getCustomers.js";
 export default function AdminDashboard() {
 
     // Variables
+    const router = useRouter();
     const [customers, setCustomers] = useState([]);
     const [tableLoading, setTableLoading] = useState(true);
     const [page, setPage] = useState(0);
@@ -64,10 +68,16 @@ export default function AdminDashboard() {
     return (
         <Stack>
             <Navbar />
-            <Box bgcolor={Palette.primary} height="70px">
+            <Box bgcolor={Palette.primary} height="70px" sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Typography variant="h4" color="white" p={2}>
                     Clientes
                 </Typography>
+
+                <Link underline="none" sx={{ marginRight: '18px' }} onClick={() => {
+                    router.push("/admin-accounts-manager");
+                }}>
+                    <Button variant="outlined" size="large" sx={{ color: 'white', border: '1px solid white' }}>Administradores</Button>
+                </Link>
             </Box>
             <Box bgcolor={Palette.boneWhite} p={2}>
                 {tableLoading && customers.length === 0 ? (

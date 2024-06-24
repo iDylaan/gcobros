@@ -1,11 +1,13 @@
-export async function adminSignIn(email, password) {
+export async function activateAdmin(userId) {
     try {
-        const response = await fetch('http://127.0.0.1:3001/api/admins/signin', {
+        const response = await fetch('http://127.0.0.1:3001/api/admin/activate', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email, password })
+            body: JSON.stringify({
+                id: userId
+            })
         });
 
         const result = await response.json();
@@ -15,20 +17,24 @@ export async function adminSignIn(email, password) {
         }
 
         if (result.success && result.data) {
-            const token = result.data.token;
-            localStorage.setItem('token', token);
+            return result.data;
         }
+        return null;
     } catch (error) {
         throw new Error(error.message);
     }
 }
-export async function getAdmins() {
+
+export async function desactivateAdmin(userId) {
     try {
-        const response = await fetch('http://127.0.0.1:3001/api/admin/', {
-            method: 'GET',
+        const response = await fetch('http://127.0.0.1:3001/api/admin/desactivate', {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
+            body: JSON.stringify({
+                id: userId
+            })
         });
 
         const result = await response.json();
