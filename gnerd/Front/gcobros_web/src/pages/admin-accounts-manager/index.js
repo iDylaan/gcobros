@@ -19,6 +19,7 @@ import {
     TextField,
     LinearProgress
 } from "@mui/material";
+import LoadingButton from '@mui/lab/LoadingButton';
 import { useRouter } from "next/router";
 import Palette from "../../constants/palette.js";
 import Navbar from "../../components/navbar/navbar.js";
@@ -54,7 +55,11 @@ export default function AdminAccountsDashboard() {
                 setTableLoading(true);
                 const adminsData = await getAdmins();
                 if (adminsData) {
-                    setAdmins(adminsData);
+                    const adminsWithLoading = adminsData.map(admin => ({
+                        ...admin,
+                        loading: false,
+                    }));
+                    setAdmins(adminsWithLoading);
                 } else {
                     setAdmins([]);
                 }
@@ -79,10 +84,20 @@ export default function AdminAccountsDashboard() {
     const handleActivateAdmin = async (userId) => {
         try {
             setTableFetching(true);
+            setAdmins(prevAdmins =>
+                prevAdmins.map(admin =>
+                    admin.id === userId ? { ...admin, loading: true } : admin
+                )
+            );
             const result = await activateAdmin(userId);
+            const adminsData = await getAdmins();
             setAdmins([]);
             if (result) {
-                setAdmins(adminsData);
+                const adminsWithLoading = adminsData.map(admin => ({
+                    ...admin,
+                    loading: false,
+                }));
+                setAdmins(adminsWithLoading);
             } else {
                 setAdmins([]);
             }
@@ -95,10 +110,20 @@ export default function AdminAccountsDashboard() {
     const handleDropAdmin = async (userId) => {
         try {
             setTableFetching(true);
+            setAdmins(prevAdmins =>
+                prevAdmins.map(admin =>
+                    admin.id === userId ? { ...admin, loading: true } : admin
+                )
+            );
             const result = await desactivateAdmin(userId);
+            const adminsData = await getAdmins();
             setAdmins([]);
             if (result) {
-                setAdmins(adminsData);
+                const adminsWithLoading = adminsData.map(admin => ({
+                    ...admin,
+                    loading: false,
+                }));
+                setAdmins(adminsWithLoading);
             } else {
                 setAdmins([]);
             }
@@ -275,14 +300,14 @@ export default function AdminAccountsDashboard() {
                                         <TableCell>{customer.suspended ? "SI" : "NO"}</TableCell>
                                         <TableCell>{customer.status ? "Activa" : "Baja"}</TableCell>
                                         <TableCell>
-                                            {customer.suspended ? (
-                                                <Button onClick={() => handleActivateAdmin(customer.id)} variant="outlined" size="small" color="success" disabled={data.user.email == customer.primaryEmail || tableFetching}>
-                                                    Activar
-                                                </Button>
+                                            {!customer.status ? (
+                                                <LoadingButton loading={customer.loading} onClick={() => handleActivateAdmin(customer.id)} variant="outlined" size="small" color="success" disabled={data.user.email == customer.primaryEmail || tableFetching}>
+                                                    <span>Activar</span>
+                                                </LoadingButton>
                                             ) : (
-                                                <Button onClick={() => handleDropAdmin(customer.id)} variant="outlined" size="small" color="error" disabled={data.user.email == customer.primaryEmail || tableFetching}>
-                                                    Baja
-                                                </Button>
+                                                <LoadingButton loading={customer.loading} onClick={() => handleDropAdmin(customer.id)} variant="outlined" size="small" color="error" disabled={data.user.email == customer.primaryEmail || tableFetching}>
+                                                    <span>Baja</span>
+                                                </LoadingButton>
                                             )}
                                         </TableCell>
                                     </TableRow>

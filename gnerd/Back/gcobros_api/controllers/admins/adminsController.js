@@ -8,7 +8,7 @@ const activateAdmin = async (req, res) => {
     try {
         const { id } = req.body;
         const admin = await Admin.findByPk(id);
-        admin.update({ active: true });
+        admin.update({ status: true });
         return res.json(handleResponse(admin));
     } catch (error) {
         console.log(error);
@@ -20,7 +20,7 @@ const desactivateAdmin = async (req, res) => {
     try {
         const { id } = req.body;
         const admin = await Admin.findByPk(id);
-        admin.update({ active: false });
+        admin.update({ status: false });
         return res.json(handleResponse(admin));
     } catch (error) {
         console.log(error);
