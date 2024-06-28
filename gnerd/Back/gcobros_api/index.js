@@ -7,6 +7,7 @@ require('dotenv').config({
 const db = require("./models/index");
 const express = require("express");
 const cors = require("cors");
+const bodyParser = require('body-parser');
 const { updateSubscriptions } = require("./controllers/automatic/subscriptions");
 const { updateProducts } = require("./controllers/automatic/products");
 const { updateCustomers } = require("./controllers/automatic/customers");
@@ -20,6 +21,7 @@ const corsOptions = {
 
 app.use(express.json());
 app.use(cors(corsOptions));
+app.use(bodyParser.json());
 app.use(require("./routes"));
 app.set("trust proxy", true);
 
@@ -35,10 +37,10 @@ const main = async () => {
       console.log(`App listening on port ${port}`);
     });
     
-    await updateProducts();
-    await updateSubscriptions();
-    await updateCustomers();
-    await updateTransactions();
+    // await updateProducts();
+    // await updateSubscriptions();
+    // await updateCustomers();
+    // await updateTransactions();
 
     initCronJobs();
 

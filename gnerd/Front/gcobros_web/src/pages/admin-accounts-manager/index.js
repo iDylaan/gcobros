@@ -23,20 +23,16 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { useRouter } from "next/router";
 import Palette from "../../constants/palette.js";
 import Navbar from "../../components/navbar/navbar.js";
+import LoadingPage from "../../components/loading";
+import { useSession } from "next-auth/react";
 import { getAdmins } from "../api/admin/getAdmins.js";
 import createAdmin from "../api/admin/createAdmin.js";
-import { useSession } from "next-auth/react";
 import { activateAdmin, desactivateAdmin } from "../api/admin/handleAdmin.js";
 
 export default function AdminAccountsDashboard() {
 
     // Variables
-    const { data, data: session, status } = useSession({
-        required: true,
-        onUnauthenticated() {
-            router.push("/");
-        }
-    });
+    const { data, status } = useSession();
     const router = useRouter();
     const [openModal, setOpenModal] = useState(false);
     const [fetchModalLoading, setFetchModalLoading] = useState(false);
@@ -50,29 +46,41 @@ export default function AdminAccountsDashboard() {
 
     // Funciones reservadas
     useEffect(() => {
-        async function getEffectAdmins() {
-            try {
-                setTableLoading(true);
-                const adminsData = await getAdmins();
-                if (adminsData) {
-                    const adminsWithLoading = adminsData.map(admin => ({
-                        ...admin,
-                        loading: false,
-                    }));
-                    setAdmins(adminsWithLoading);
-                } else {
-                    setAdmins([]);
+        if (status === "authenticated") {
+            if (data.user.isAdmin) {
+                async function getEffectCustomers() {
+                    try {
+                        setTableLoading(true);
+                        const adminsData = await getAdmins();
+                        if (adminsData) {
+                            const adminsWithLoading = adminsData.map(admin => ({
+                                ...admin,
+                                loading: false,
+                            }));
+                            setAdmins(adminsWithLoading);
+                        } else {
+                            setAdmins([]);
+                        }
+                    } catch (error) {
+                        setCustomers([]);
+                        console.error(error);
+                    } finally {
+                        setTableLoading(false);
+                    }
                 }
-            } catch (error) {
-                setAdmins([]);
-                console.error(error);
-            } finally {
-                setTableLoading(false);
-            }
-        }
 
-        getEffectAdmins();
-    }, []);
+                getEffectCustomers();
+            } else {
+                router.push("/dashboard");
+            }
+        } else {
+            router.push("/");
+        }
+    }, [status, data]);
+
+    if (status === "loading") {
+        return <LoadingPage />;
+    }
 
     // Funciones
     const handleOpenModal = () => setOpenModal(true);
@@ -262,7 +270,7 @@ export default function AdminAccountsDashboard() {
                     </Button>
                 </Box>
             </Modal >
-            <Box bgcolor={Palette.boneWhite} p={2}>
+            <Box bgcolor={Palette.boneWhite} p={2} sx={{ minHeight: 'calc(100dvh - 180px)' }}>
                 {tableLoading && admins.length === 0 ? (
                     <TableContainer component={Paper} sx={{ overflowX: "auto" }}>
                         <Table>

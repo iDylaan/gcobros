@@ -2,9 +2,11 @@ const express = require('express');
 const router = express.Router();
 
 const {
-    getCustomers
+    getCustomers,
+    getCustomer,
 } = require("../controllers/customers/customerController.js");
 
 router.get("/", getCustomers);
+router.get("/:idUser", getCustomer);
 
 module.exports = router;

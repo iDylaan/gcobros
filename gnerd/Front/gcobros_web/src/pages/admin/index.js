@@ -15,43 +15,59 @@ import {
     Link,
     Button
 } from "@mui/material";
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+import LoadingPage from "../../components/loading";
 import Palette from "../../constants/palette.js";
 import Navbar from "../../components/navbar/navbar.js";
 import getCustomers from "../api/customers/getCustomers.js";
+import moment from 'moment';
 
 export default function AdminDashboard() {
 
     // Variables
     const router = useRouter();
+    const { data, status } = useSession();
     const [customers, setCustomers] = useState([]);
     const [tableLoading, setTableLoading] = useState(true);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
+
     // Funciones reservadas
     useEffect(() => {
-        async function getEffectCustomers() {
-            try {
-                setTableLoading(true);
-                const customersData = await getCustomers();
-                console.log(customersData);
-                if (customersData) {
-                    setCustomers(customersData);
-                } else {
-                    setCustomers([]);
+        if (status === "authenticated") {
+            if (data.user.isAdmin) {
+                async function getEffectCustomers() {
+                    try {
+                        setTableLoading(true);
+                        const customersData = await getCustomers();
+                        if (customersData) {
+                            setCustomers(customersData);
+                        } else {
+                            setCustomers([]);
+                        }
+                    } catch (error) {
+                        setCustomers([]);
+                        console.error(error);
+                    } finally {
+                        setTableLoading(false);
+                    }
                 }
-                console.log(customersData);
-            } catch (error) {
-                setCustomers([]);
-                console.error(error);
-            } finally {
-                setTableLoading(false);
-            }
-        }
 
-        getEffectCustomers();
-    }, []);
+                getEffectCustomers();
+            } else {
+                router.push("/dashboard");
+            }
+        } else {
+            router.push("/");
+        }
+    }, [status, data]);
+
+    if (status === "loading") {
+        return <LoadingPage />;
+    }
 
     // Funciones
     const handleChangePage = (event, newPage) => {
@@ -61,6 +77,10 @@ export default function AdminDashboard() {
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
+    };
+
+    const formatDate = (date) => {
+        return moment(date).format('DD/MM/YYYY');
     };
 
     const paginatedCustomers = customers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
@@ -86,10 +106,14 @@ export default function AdminDashboard() {
                             <TableHead>
                                 <TableRow>
                                     <TableCell>ID</TableCell>
+                                    <TableCell>Nombre</TableCell>
                                     <TableCell>Dominio</TableCell>
-                                    <TableCell>Organización</TableCell>
-                                    <TableCell>Fecha de próximo pago</TableCell>
-                                    <TableCell>Estatus</TableCell>
+                                    <TableCell>Contacto</TableCell>
+                                    <TableCell>País</TableCell>
+                                    <TableCell>Fecha límite de pago</TableCell>
+                                    <TableCell>Importe</TableCell>
+                                    <TableCell>Estatus de pago</TableCell>
+                                    <TableCell></TableCell>
                                 </TableRow>
                             </TableHead>
                         </Table>
@@ -107,8 +131,10 @@ export default function AdminDashboard() {
                                     <TableCell>Dominio</TableCell>
                                     <TableCell>Contacto</TableCell>
                                     <TableCell>País</TableCell>
-                                    <TableCell>Fecha de próximo pago</TableCell>
-                                    <TableCell>Estatus</TableCell>
+                                    <TableCell>Fecha límite de pago</TableCell>
+                                    <TableCell>Importe</TableCell>
+                                    <TableCell>Estatus de pago</TableCell>
+                                    <TableCell></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -118,20 +144,52 @@ export default function AdminDashboard() {
                                         <TableCell>{customer.organizationName}</TableCell>
                                         <TableCell>{customer.customerDomain}</TableCell>
                                         <TableCell>{customer.customerName}</TableCell>
-                                        <TableCell>{customer.countryCode}</TableCell>
-                                        {/* <TableCell>{customer.nextPaymentDate}</TableCell> */}
+                                        <TableCell>
+                                            <Typography variant="body1">
+                                                <span className={`fi fi-${customer.countryCode.toLowerCase()}`} style={{ marginRight: 8 }}></span>
+                                                {customer.countryCode}
+                                            </Typography>
+                                        </TableCell>
+                                        <TableCell>
+                                            {customer.delayed_transaction !== null
+                                                ? formatDate(customer.delayed_transaction.payment_limit_day)
+                                                : customer.transaction !== null
+                                                    ? formatDate(customer.transaction.payment_limit_day) : ''}
+                                        </TableCell>
+                                        <TableCell>
+                                            {customer.delayed_transaction !== null
+                                                ? '$' + customer.delayed_transaction.amount + ' mxn'
+                                                : customer.transaction !== null
+                                                    ? '$' + customer.transaction.amount + ' mxn' : ''}
+                                        </TableCell>
                                         <TableCell>
                                             <Box
                                                 component="span"
                                                 sx={{
-                                                    bgcolor: customer.status === "ACTIVO" ? "green" : "red",
+                                                    bgcolor: customer.transaction_status === "PAGADO"
+                                                        ? "green"
+                                                        : customer.transaction_status === "PENDIENTE"
+                                                            ? "#4285f4"
+                                                            : customer.transaction_status === "RETRASADO"
+                                                            ? "red" 
+                                                            : customer.transaction_status === "FALTA IMPORTE"
+                                                            ? '#FCB200' : 'grey',
                                                     color: "white",
-                                                    p: 0.5,
+                                                    p: customer.transaction_status === "" ? 0 : 0.5,
                                                     borderRadius: 1
                                                 }}
                                             >
-                                                {customer.status}
+                                                {customer.transaction_status}
                                             </Box>
+                                        </TableCell>
+                                        <TableCell>
+                                            <Link underline="none" sx={{ marginRight: '18px' }} onClick={() => {
+                                                router.push("/customer-details?id=" + customer.customerId);
+                                            }}>
+                                                <Button variant="outlined" size="small" startIcon={<VisibilityIcon />}>
+                                                    Detalles
+                                                </Button>
+                                            </Link>
                                         </TableCell>
                                     </TableRow>
                                 ))}

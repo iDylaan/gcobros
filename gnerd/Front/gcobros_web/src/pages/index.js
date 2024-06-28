@@ -61,7 +61,7 @@ export default function ColumnsGrid() {
       pathname: data.user.isAdmin ? "/admin" : "/dashboard",
     });
 
-    return <LoadingPage />;;
+    return <LoadingPage />;
   }
 
   return (

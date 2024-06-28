@@ -28,15 +28,15 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
       },
       amount: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
       amount_captured: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: true,
       },
       amount_refunded: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: true,
       },
       balance_transaction: {
@@ -80,11 +80,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
       },
       payment_open_day: {
-        type: DataTypes.STRING,
+        type: DataTypes.DATE,
         allowNull: false,
       },
       payment_limit_day: {
-        type: DataTypes.STRING,
+        type: DataTypes.DATE,
         allowNull: false,
       },
       subscriptionId: {
